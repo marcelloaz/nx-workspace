@@ -1,0 +1,73 @@
+{
+  "root": "apps/show-roon",
+  "sourceRoot": "apps/show-roon/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/web:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "compiler": "babel",
+        "outputPath": "dist/apps/show-roon",
+        "index": "apps/show-roon/src/index.html",
+        "baseHref": "/",
+        "main": "apps/show-roon/src/main.tsx",
+        "polyfills": "apps/show-roon/src/polyfills.ts",
+        "tsConfig": "apps/show-roon/tsconfig.app.json",
+        "assets": [
+          "apps/show-roon/src/favicon.ico",
+          "apps/show-roon/src/assets"
+        ],
+        "styles": [],
+        "scripts": [],
+        "webpackConfig": "@nrwl/react/plugins/webpack"
+      },
+      "configurations": {
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/show-roon/src/environments/environment.ts",
+              "with": "apps/show-roon/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/web:dev-server",
+      "options": {
+        "buildTarget": "show-roon:build",
+        "hmr": true
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "show-roon:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/show-roon/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/show-roon"],
+      "options": {
+        "jestConfig": "apps/show-roon/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

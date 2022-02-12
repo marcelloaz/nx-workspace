@@ -1,0 +1,28 @@
+{
+  "root": "apps/show-roon-e2e",
+  "sourceRoot": "apps/show-roon-e2e/src",
+  "projectType": "application",
+  "targets": {
+    "e2e": {
+      "executor": "@nrwl/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/show-roon-e2e/cypress.json",
+        "devServerTarget": "show-roon:serve"
+      },
+      "configurations": {
+        "production": {
+          "devServerTarget": "show-roon:serve:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/show-roon-e2e/**/*.{js,ts}"]
+      }
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["show-roon"]
+}

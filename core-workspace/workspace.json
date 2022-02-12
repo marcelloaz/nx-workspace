@@ -1,0 +1,7 @@
+{
+  "version": 2,
+  "projects": {
+    "show-roon": "apps/show-roon",
+    "show-roon-e2e": "apps/show-roon-e2e"
+  }
+}
