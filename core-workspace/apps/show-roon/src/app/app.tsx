@@ -2,41 +2,39 @@ import styled, { keyframes, ThemeProvider } from 'styled-components';
 import NxWelcome from './nx-welcome';
 import React, { useEffect, useRef, useState } from 'react';
 import useMouse from '@react-hook/mouse-position';
-import { gsap } from "gsap";
+import { gsap } from 'gsap';
 const StapOne = styled.div`
- background-color: "#0df388";
- padding: "250px";
-
+  background-color: '#0df388';
+  padding: '250px';
 
   /* display: flex;
  margin-top: 380px;
  align-items: flex-end; */
 `;
 
-
 const color = {
   spectrum1: '#ff598a',
-  spectrum2: '#de56e8',
-  spectrum3: '#b36bff',
+  spectrum2: '#f8b388',
+  spectrum3: '#f8ad58',
   spectrum4: '#5b56e8',
-  spectrum5: '#5e9fff'
-}
+  spectrum5: '#5e9fff',
+};
 
 const theme = {
   header: {
-    fg: '#ff598a'
+    fg: '#ff598a',
   },
   input: {
     color: '#fff',
     background: '#070222',
-    textAlign: 'center'
+    textAlign: 'center',
   },
   inputFocus: {
-    outline: '2px solid #5e9fff'
-  }
-}
+    outline: '2px solid #5e9fff',
+  },
+};
 
-const Input = styled.input.attrs(props => ({
+const Input = styled.input.attrs((props) => ({
   type: 'text',
   size: 10,
 }))`
@@ -46,21 +44,93 @@ const Input = styled.input.attrs(props => ({
   flex-wrap: wrap;
   margin-top: 20px;
 
-   width: 90%;
+  width: 90%;
   ::placeholder {
     color: #f00956;
   }
-`
+`;
+
+const FlexContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+`;
+
+const Navigation = styled(FlexContainer)`
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  width: calc(100% - 20px);
+  justify-content: center;
+
+`;
+
+const LeftSideNav = styled(FlexContainer)`
+  justify-content: space-evenly;
+  order: 1;
+  padding-top: 30px;
+
+  @media (max-width: 768px) {
+    order: 2;
+  }
+`;
+
+const NavItem = styled.a`
+  border: 4px solid #6200AC;
+  color: #d4d3d4;
+  font-size: 20px;
+  margin: 0 15px 20px 0;
+  background-color: #6200AC;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.6;
+    background-color: orange;
+    color: #ac0000;
+  }
+`;
+
+const FrontEnd = styled.div`
+  height: 50px;
+  flex-direction: row;
+  border: 5px solid red;
+  background-color: orange;
+`;
+const BackEnd = styled.div`
+  height: 50px;
+  flex-direction: row;
+  border: 5px solid blue;
+  background-color: #ff1100;
+`;
+
+const Dunas = styled.div`
+  background: url('./../../assets/dunas.png') repeat 0 0 transparent;
+  height: 50px;
+  display: flex;
+  margin-top: -92px;
+  background-position: 20% 20%;
+`;
+
+const Background = styled.div`
+  background: url('./../../assets/bg-clouds.png') repeat 0 0 transparent;
+  width: 100%;
+  display: flex;
+  background-position: 20% 20%;
+`;
 
 const Content = styled.div`
- box-shadow: #030005d8;
- flex-wrap: wrap;
-background-color: #7e00e6;
-border-style: dotted;
-border-width: 1px;
-justify-content: center;
-align-items: center;
-padding-left: 320px;
+  width: 100%;
+  min-height: 753px;
+  display: flex;
+  flex-direction: column;
+  background-color: #cac7c7;
+  margin: 0px 0px 0px 0px;
+  padding: 0px 0px 0px 0px;
 `;
 
 const jitter = keyframes`
@@ -70,7 +140,7 @@ const jitter = keyframes`
   100% {
     transform: scaleY(0.9);
   }
-`
+`;
 
 type PropTypeBg = {
   active: boolean;
@@ -78,12 +148,12 @@ type PropTypeBg = {
 
 const Bar = styled.div`
   height: ${(props: PropTypeBg) => (props.active ? '100%' : '10em')};
-  //width: 50%;
   z-index: 90000000;
   animation: ${jitter} 350ms ease-out infinite alternate;
   transform-origin: bottom;
-  transition: all 1s;
-  margin-top: 100px;
+  transition: all 5s;
+  //margin-left: 800px;
+  //margin-top: ${(props: PropTypeBg) => (props.active ? '100px' : '170px')};
 
   &:nth-child(1n) {
     //background: "${color.spectrum1};"
@@ -105,17 +175,40 @@ const Bar = styled.div`
    // background: ${color.spectrum5};
     animation-delay: 200ms;
   }<PropTypeBg>
-`
-
-const StapTwo = styled.div`
-  display: flex;
-  margin-top: -300px;
 `;
 
-const StapTree = styled.div`
-  margin-top: -300px;
-`;
+const Home = styled.div`
+  height: 23px;
+  width: ${(props: PropTypeBg) => (props.active ? '100%' : '100%')};
+  animation: ${jitter} 850ms ease-out infinite alternate;
+  transform-origin: bottom;
+  transition: all 1s;
+  flex-wrap: nowrap;
+  margin-top: -5px;
+  flex-direction: column;
 
+  display: inline-flex;
+  &:nth-child(1n) {
+    background: "${color.spectrum1};"
+    animation-delay: 0;
+  }
+  &:nth-child(2n) {
+    background: ${color.spectrum2};
+    animation-delay: 50ms;
+  }
+  &:nth-child(3n) {
+    background: ${color.spectrum3};
+    animation-delay: 100ms;
+  }
+  &:nth-child(4n) {
+   background: ${color.spectrum4};
+    animation-delay: 150ms;
+  }
+  &:nth-child(5n) {
+   background: ${color.spectrum5};
+    animation-delay: 200ms;
+  }<PropTypeBg>
+`;
 
 const invertTheme = (fg: any, bg: any) => ({
   fg: bg,
@@ -123,17 +216,21 @@ const invertTheme = (fg: any, bg: any) => ({
 });
 
 export function App() {
-  const [cxDef, setCxDef] = useState("");
-  const [cyDef, setCyDef] = useState("");
+  const [cxDef, setCxDef] = useState('');
+  const [cyDef, setCyDef] = useState('');
 
   const [barActive, setBarActive] = useState(false);
-  const [barActiveSec, setBarActiveSec] = useState(false);
+  const [barActiveSec, setBarActiveSec] = useState(5);
 
-
-  const [loadRef, setLoadRef] = useState(false);
+  const [loadRef, setLoadRef] = useState(true);
   const ref = React.useRef(null);
   const boxRef = useRef(null);
+  const carRef = useRef(null);
   const bol2Ref = useRef(null);
+
+  const backgraundndRef = useRef(null);
+  const dunasRef = useRef(null);
+
   const mouse = useMouse(ref, {
     enterDelay: 100,
     leaveDelay: 100,
@@ -143,983 +240,1181 @@ export function App() {
     setCxDef('178');
     setCyDef('380');
 
+    gsap.to(boxRef?.current, { rotation: '+=90' });
+    gsap.to(bol2Ref?.current, { rotation: '+=90' });
 
-    if(mouse != null && mouse.x != null){
+    gsap.to(backgraundndRef?.current, 90, {
+      repeat: -1,
+      backgroundPosition: '-2247px 0px',
+      ease: 'none',
+    });
 
+    gsap.to(dunasRef?.current, 40, {
+      repeat: -1,
+      delay: 0.3,
+      backgroundPosition: '-2947px 0px',
+      ease: 'none',
+    });
 
-      if(boxRef?.current){
+    setLoadRef(false);
+    // if(mouse != null && mouse.x != null){
 
+    //   if(boxRef?.current){
 
-        if(mouse.x < 350){
-          console.log("menor q");
-          gsap.to(boxRef?.current, { rotation: "+=390" });
-          gsap.to(bol2Ref?.current, { rotation: "+=390" });
+    //     if(mouse.x < 350){
+    //
+    //     }
 
-          setBarActive(true);
-        }
+    //     if(mouse.x > 350){
+    //       setLoadRef(true);
+    //     }
 
-        if(mouse.x > 350){
-          gsap.to(boxRef?.current, { rotation: "-=390" });
-          gsap.to(bol2Ref?.current, { rotation: "-=390" });
-          setBarActiveSec(false);
-        }
+    //    }
 
-       }
-
-
-    }
-
-     //   if(mouse?.x >= 131){
-      //     setCxDef('178');
-      //     setCyDef('380');
-      //     console.log(mouse?.x);
-      //   }
-      // }
-
+    // }
   });
 
-  useEffect(() => {
-
-
-    if(mouse != null){
-      let x = mouse.x?.toString();
-      let y = mouse.y?.toString();
-
-        // setCxDef('178');
-        // setCyDef('380');
-      if(mouse?.x){
-
-        if(mouse?.x < 350){
-          setCxDef('185');
-          setCyDef('375');
-          console.log(mouse?.x);
-        }
-      }
-    }
-  });
-
-  function Carro(){
-    return (<>
-
-      <svg style={{zIndex:-20, marginLeft:-200, marginBottom:50}} xmlns="http://www.w3.org/2000/svg"
-      width="274" height="162"
-      viewBox="85 129 804 462" preserveAspectRatio="none">
-        <g>
-          <defs>
-            <path id="s-Path_31-d1224" d="M98.17887878417974 499.81440622972093 C104.5799526806237 488.7624918883839 57.638870863076136 222.43608046722892 196.32803374432194 157.35885788449042 C335.01719662556775 92.28163530175192 553.719338092148 161.62621674237494 553.719338092148 161.62621674237494 C553.719338092148 161.62621674237494 632.6654769630109 229.90395846852664 708.4110966904607 376.06099935107045 C739.3494484101234 394.19727449707966 750.0178455548344 378.19467878001285 811.8945489941595 415.5340687865021 C829.6401970090305 429.05456251211797 848.7245225047532 501.4768653952097 855.8931470976129 531.0073514488496 C857.774811429404 538.7586936467573 858.835496430889 543.5548345230368 858.835496430889 543.5548345230368 L883.3728098637248 567.0253082414015 L875.904931862427 590.4957819597662 L668.9380272550293 590.4957819597662 C668.9380272550293 590.4957819597662 679.6064243997405 437.9377027903955 584.6576898118105 430.46982478909774 C489.7089552238806 423.00194678779997 454.50324464633377 478.4776119402984 448.1022063595069 499.8144062297208 C441.70116807268005 521.1512005191432 438.50064892926673 576.6268656716416 438.50064892926673 576.6268656716416 L368.0892277741726 576.6268656716416 C368.0892277741726 576.6268656716416 385.1586632057108 561.6911096690458 384.09182349123955 530.7527579493833 C383.0249837767683 499.8144062297208 381.9581440622975 437.93770279039563 322.2151200519145 415.5340687865021 C262.4720960415315 393.1304347826085 188.86015574302405 401.66515249837744 154.72128487994814 443.27190136275124 C120.58241401687224 484.87865022712504 119.51557430240109 576.6268656716416 119.51557430240109 576.6268656716416 L98.17887878417969 576.6268656716416 L98.17887878417972 576.6268656716416 C98.17887878417972 576.6268656716416 91.77780488773578 510.86632057105794 98.17887878417974 499.81440622972093 Z "></path>
-          </defs>
-          <g>
-            <use  xlinkHref="#s-Path_31-d1224" fill="#B054D9" fill-opacity="1.0"></use>
-          </g>
-        </g>
-        <g>
-          <defs>
-            <path id="s-Path_32-d1224" d="M656.0 388.0 C656.0 388.0 663.4555875588609 388.51620577043775 670.3598325326279 385.7679255349934 C676.8053619933863 383.20224003407594 682.7703771185535 377.7914408659535 681.7401953962697 366.4594419208304 C679.6065159673276 342.9889682024658 630.5318891016558 237.3718369785334 550.5189105163216 168.02725502920163 C534.5163147992548 157.3588573757816 351.01990425857423 122.15314679823467 278.47480367453795 146.6904602310704 C205.92970309050168 171.22777366390613 285.942651153307 370.72680077871496 312.613644015085 378.19467878001285 C339.28463687686303 385.66255678131074 656.0 388.0 656.0 388.0 Z "></path>
-          </defs>
-          <g>
-            <use  xlinkHref="#s-Path_32-d1224" fill="#1BDAF1" fill-opacity="1.0"></use>
-          </g>
-        </g>
-        <g>
-          <defs>
-            <path id="s-Path_38-d1224" d="M638.0 352.00000000000006 L660.9991528004596 388.59571706683965 L635.697503697478 388.5957170668397 L621.9971612117108 363.25892277741724 L569.7220152026257 384.59571706683965 L559.0536180579145 384.59571706683965 L638.0000000000002 308.85009733939 L654.0023526458444 324.85269305645687 Z "></path>
-          </defs>
-          <g>
-            <use  xlinkHref="#s-Path_38-d1224" fill="#575353" fill-opacity="1.0"></use>
-          </g>
-        </g>
-        <g>
-          <defs>
-            <path id="s-Path_33-d1224" d="M249.0 147.0 C237.93486400210645 169.09409474367288 203.79599313903077 195.76508760545107 234.73434485869313 277.9117456197274 C215.53122999821278 262.9759896171317 203.51611750886556 229.64881346197063 205.92967256797272 207.5003244646333 C208.3432276270799 185.35183546729596 236.59466227952885 139.84166125892284 249.0 147.0 Z "></path>
-          </defs>
-          <g>
-            <use  xlinkHref="#s-Path_33-d1224" fill="#6F2098" fill-opacity="1.0"></use>
-          </g>
-        </g>
-        <g>
-          <defs>
-            <path id="s-Path_34-d1224" d="M210.0 161.0 C210.0 161.0 181.39235913513699 205.36664503569096 198.46179456667494 255.50811161583374 C183.52603856407927 243.7728747566514 179.2586797061947 190.43088903309524 179.2586797061947 190.43088903309524 Z "></path>
-          </defs>
-          <g>
-            <use  xlinkHref="#s-Path_34-d1224" fill="#6F2098" fill-opacity="1.0"></use>
-          </g>
-        </g>
-        <g>
-          <defs>
-            <path id="s-Path_39-d1224" d="M890.0 556.0 L890.0 590.3340876876 L865.6253986165545 590.3340876876 L661.2197263591495 590.3340876876 L661.2197263591495 539.2326696232487 L865.6253986165548 539.2326696232487 Z "></path>
-          </defs>
-          <g>
-            <use  xlinkHref="#s-Path_39-d1224" fill="#C4FFD5" fill-opacity="1.0"></use>
-          </g>
-        </g>
-        <g>
-          <defs>
-            <ellipse cx="146.2791499257266" cy="317.84285714285716" rx="23.5" ry="17.842857142857156" id="s-Ellipse_5-d1224-path"></ellipse>
-          </defs>
-          <g transform="rotate(24.189324276528428 146.2791499257266 317.84285714285716)">
-            <use  xlinkHref="#s-Ellipse_5-d1224-path" fill="#D9D9D9" fill-opacity="1.0"></use>
-          </g>
-        </g>
-        <g>
-          <defs>
-            <ellipse cx="145.2241456529312" cy="318.5069489350098" rx="21.0000000000001" ry="14.768693009118607" id="s-Ellipse_6-d1224-path"></ellipse>
-          </defs>
-          <g transform="rotate(24.189324276528428 145.2241456529312 318.50694893500975)">
-            <use  xlinkHref="#s-Ellipse_6-d1224-path" fill="#E8AB1C" fill-opacity="1.0"></use>
-          </g>
-        </g>
-        <g>
-          <defs>
-            <path id="s-Path_35-d1224" d="M114.76089851284789 313.3800385338207 C114.41429736305801 294.1792598187006 139.55631564397845 288.4925628686682 156.2791499257266 288.49489901402825 "></path>
-          </defs>
-          <g>
-            <use  xlinkHref="#s-Path_35-d1224" fill="none" stroke-width="4.0" stroke="#6F2098" stroke-linecap="round" stroke-linejoin="round"></use>
-          </g>
-        </g>
-        <g>
-          <defs>
-            <path id="s-Path_41-d1224" d="M130.10805179828301 545.8808073000266 L135.51825141287875 580.2148949876267 L126.29021442063595 580.2148949876267 C126.29021442063595 580.2148949876267 93.15950999690938 586.3937758144609 88.60253955552673 580.2148949876267 C84.04556911414409 574.0360141607924 83.78782294322048 543.1435651362792 88.60253955552673 529.1134769232754 C107.64388405681444 528.4670934414112 126.29021442063598 529.1134769232754 126.29021442063598 529.1134769232754 Z "></path>
-          </defs>
-          <g>
-            <use  xlinkHref="#s-Path_41-d1224" fill="#C4FFD5" fill-opacity="1.0"></use>
-          </g>
-        </g>
-        <g>
-          <defs>
-            <path id="s-Path_40-d1224" d="M449.906349880945 554.0000000000006 L460.3352886682543 588.3340876876007 L442.54691859416477 588.3340876876007 L369.89849853515636 588.3340876876007 L369.89849853515636 537.2326696232492 L442.5469185941648 537.2326696232492 Z "></path>
-          </defs>
-          <g>
-            <use  xlinkHref="#s-Path_40-d1224" fill="#C4FFD5" fill-opacity="1.0"></use>
-          </g>
-        </g>
-        <g>
-          <defs>
-            <path id="s-Path_36-d1224" d="M120.6735885788449 582.9610642439973 L156.8550457023012 582.9610642439972 C156.8550457023012 582.9610642439972 134.4514116984074 544.5548345230368 146.18664855758982 485.8786502271251 C176.05816056278127 411.1998702141466 234.44709089211113 413.4085271556515 263.53901714941344 412.0661907852044 C361.97552484733865 418.1917324160551 369.3566680254679 491.2128487994806 371.4903474544102 505.0817650876053 C372.5571871688814 540.2874756651523 356.3540723084008 582.9610642439969 356.3540723084008 582.9610642439969 L383.02506517017923 582.9610642439969 C383.02506517017923 582.9610642439969 392.62662260041935 531.7527579493833 392.62662260041935 505.0817650876052 C393.69346231489044 492.27968851395167 387.29242402806364 446.4055807916934 346.7525148781611 416.5340687865021 C325.41572058873874 398.3977936404931 269.94005543624024 380.261518494484 190.9939165653771 400.5314730694353 C119.51565569581186 425.06878650227117 105.82892574481102 476.27709279688474 106.80467229072028 497.6138870863074 C106.71357912215842 525.3517196625568 120.6735885788449 582.9610642439973 120.6735885788449 582.9610642439973 Z "></path>
-          </defs>
-          <g>
-            <use  xlinkHref="#s-Path_36-d1224" fill="#6F2098" fill-opacity="1.0"></use>
-          </g>
-        </g>
-        <g>
-          <defs>
-            <path id="s-Path_37-d1224" d="M439.7569709735878 582.4957819597664 L467.5484442731147 582.4957819597661 C467.5484442731147 582.4957819597661 447.5733864063 558.7159511659393 458.0365119555838 506.4003234195203 C484.66992244466985 439.8167971968053 540.0636334116248 446.1249845605489 566.0019660207774 444.92815878345624 C645.2331409781108 451.45652534310614 650.6136417746211 516.6957597460686 652.5160282381273 529.0612717588587 C653.4672214698803 560.45064840671 636.8608395251615 592.097339390006 636.8608395251615 592.097339390006 L677.7621484905436 592.0973393900061 C677.7621484905436 592.0973393900061 677.7621484905436 536.8385068356187 677.7621484905436 513.0586760417917 C678.7133417222966 501.64435726075476 665.5383043304803 469.5615692725423 629.3929615238636 442.9281587834563 C610.3690968888022 426.7578738436541 567.3080871244691 414.5711445003358 496.9197879747418 432.6438159036441 C455.5934754511796 443.85286308925356 432.7220034512377 510.03740712379704 433.59197810421114 529.0612717588588 C433.5107595254315 553.7922957844388 439.7569709735878 582.4957819597664 439.7569709735878 582.4957819597664 Z "></path>
-          </defs>
-          <g>
-            <use  xlinkHref="#s-Path_37-d1224" fill="#6F2098" fill-opacity="1.0"></use>
-          </g>
-        </g>
-        <g>
-          <defs>
-            <path id="s-Path_42-d1224" d="M855.5593463760258 537.7326696232493 L677.8098528275798 537.7326696232493 "></path>
-          </defs>
-          <g>
-            <use  xlinkHref="#s-Path_42-d1224" fill="none" stroke-width="7.0" stroke="#6F2098" stroke-linecap="round" stroke-linejoin="round"></use>
-          </g>
-        </g>
-        <g>
-          <defs>
-            <path id="s-Path_43-d1224" d="M437.86184580527515 537.7326696232493 L385.43249655750003 537.7326696232493 "></path>
-          </defs>
-          <g>
-            <use  xlinkHref="#s-Path_43-d1224" fill="none" stroke-width="7.0" stroke="#6F2098" stroke-linecap="round" stroke-linejoin="round"></use>
-          </g>
-        </g>
-        <g>
-          <defs>
-            <path id="s-Path_44-d1224" d="M115.71967797226318 530.0723646321509 L90.05773818676744 530.0723646321509 "></path>
-          </defs>
-          <g>
-            <use  xlinkHref="#s-Path_44-d1224" fill="none" stroke-width="7.0" stroke="#6F2098" stroke-linecap="round" stroke-linejoin="round"></use>
-          </g>
-        </g>
-        <g>
-          <defs>
-            <path id="s-Path_46-d1224" d="M787.4650622170406 404.5624518316907 C767.4995989647268 415.0086720014948 744.2254214947894 427.116502249996 760.4498576598783 444.1073257491563 C776.6742938249671 461.09814924831664 831.2803971850913 478.82168815868465 840.2200021382324 476.78198632446487 C839.6953526617383 449.90954245301043 833.1192160640786 416.3350008530964 787.4650622170406 404.5624518316907 Z "></path>
-          </defs>
-          <g>
-            <use  xlinkHref="#s-Path_46-d1224" fill="#D6872E" fill-opacity="1.0"></use>
-          </g>
-        </g>
-        <g>
-          <defs>
-            <path id="s-Path_45-d1224" d="M792.7457177150967 404.56245183169074 C774.7787541947903 414.28705214105264 753.834271600877 425.5584793047866 768.43467676212 441.3755848961333 C783.0350819233631 457.19269048748004 832.175232325019 473.6918958621628 840.2200021382325 471.7930956487233 C839.7478689407208 446.7769872633153 833.8299894073716 415.5217588340901 792.7457177150967 404.56245183169074 Z "></path>
-          </defs>
-          <g>
-            <use  xlinkHref="#s-Path_45-d1224" fill="#D6C62E" fill-opacity="1.0"></use>
-          </g>
-        </g>
-        <g>
-          <defs>
-            <path id="s-Path_47-d1224" d="M785.3913057391317 404.0 C743.9178775697696 427.1072216586132 747.1634266042017 438.7650061780602 771.0652746429273 452.8099195993842 C781.2575046093009 458.8777399946579 802.2713819513338 471.50124736998384 839.2200021382322 477.6384585582189 "></path>
-          </defs>
-          <g>
-            <use  xlinkHref="#s-Path_47-d1224" fill="none" stroke-width="5.0" stroke="#6F2098" stroke-linecap="round" stroke-linejoin="round"></use>
-          </g>
-        </g>
-      </svg>
-
-
-      </>)
+  function goCar(condinate: any) {
+    console.log(condinate);
+    gsap.to(boxRef?.current, { rotation: '+=90', x: condinate });
+    gsap.to(bol2Ref?.current, { rotation: '+=90', x: condinate });
+    gsap.to(carRef?.current, { x: condinate });
   }
 
-  function Acessorios(){
-    return (<>
-
-<svg xmlns="http://www.w3.org/2000/svg" width="575" height="453" viewBox="106 138 575 453" preserveAspectRatio="none">
-  <g>
-    <defs>
-      <path id="s-Path_36-d1224" d="M120.6735885788449 582.9610642439973 L156.8550457023012 582.9610642439972 C156.8550457023012 582.9610642439972 134.4514116984074 544.5548345230368 146.18664855758982 485.8786502271251 C176.05816056278127 411.1998702141466 234.44709089211113 413.4085271556515 263.53901714941344 412.0661907852044 C361.97552484733865 418.1917324160551 369.3566680254679 491.2128487994806 371.4903474544102 505.0817650876053 C372.5571871688814 540.2874756651523 356.3540723084008 582.9610642439969 356.3540723084008 582.9610642439969 L383.02506517017923 582.9610642439969 C383.02506517017923 582.9610642439969 392.62662260041935 531.7527579493833 392.62662260041935 505.0817650876052 C393.69346231489044 492.27968851395167 387.29242402806364 446.4055807916934 346.7525148781611 416.5340687865021 C325.41572058873874 398.3977936404931 269.94005543624024 380.261518494484 190.9939165653771 400.5314730694353 C119.51565569581186 425.06878650227117 105.82892574481102 476.27709279688474 106.80467229072028 497.6138870863074 C106.71357912215842 525.3517196625568 120.6735885788449 582.9610642439973 120.6735885788449 582.9610642439973 Z "></path>
-    </defs>
-    <g >
-      <use xlinkHref="#s-Path_36-d1224" fill="#6F2098" fill-opacity="1.0"></use>
-    </g>
-  </g>
-  <g>
-    <defs>
-      <path id="s-Path_37-d1224" d="M439.7569709735878 582.4957819597664 L467.5484442731147 582.4957819597661 C467.5484442731147 582.4957819597661 447.5733864063 558.7159511659393 458.0365119555838 506.4003234195203 C484.66992244466985 439.8167971968053 540.0636334116248 446.1249845605489 566.0019660207774 444.92815878345624 C645.2331409781108 451.45652534310614 650.6136417746211 516.6957597460686 652.5160282381273 529.0612717588587 C653.4672214698803 560.45064840671 636.8608395251615 592.097339390006 636.8608395251615 592.097339390006 L677.7621484905436 592.0973393900061 C677.7621484905436 592.0973393900061 677.7621484905436 536.8385068356187 677.7621484905436 513.0586760417917 C678.7133417222966 501.64435726075476 665.5383043304803 469.5615692725423 629.3929615238636 442.9281587834563 C610.3690968888022 426.7578738436541 567.3080871244691 414.5711445003358 496.9197879747418 432.6438159036441 C455.5934754511796 443.85286308925356 432.7220034512377 510.03740712379704 433.59197810421114 529.0612717588588 C433.5107595254315 553.7922957844388 439.7569709735878 582.4957819597664 439.7569709735878 582.4957819597664 Z "></path>
-    </defs>
-    <g >
-      <use xlinkHref="#s-Path_37-d1224" fill="#6F2098" fill-opacity="1.0"></use>
-    </g>
-  </g>
-  <g>
-    <defs>
-      <path id="s-Path_32-d1224" d="M656.0 388.0 C656.0 388.0 663.4555875588609 388.51620577043775 670.3598325326279 385.7679255349934 C676.8053619933863 383.20224003407594 682.7703771185535 377.7914408659535 681.7401953962697 366.4594419208304 C679.6065159673276 342.9889682024658 630.5318891016558 237.3718369785334 550.5189105163216 168.02725502920163 C534.5163147992548 157.3588573757816 351.01990425857423 122.15314679823467 278.47480367453795 146.6904602310704 C205.92970309050168 171.22777366390613 285.942651153307 370.72680077871496 312.613644015085 378.19467878001285 C339.28463687686303 385.66255678131074 656.0 388.0 656.0 388.0 Z "></path>
-    </defs>
-    <g >
-      <use xlinkHref="#s-Path_32-d1224" fill="#1BDAF1" fill-opacity="1.0"></use>
-    </g>
-  </g>
-</svg>
-
-      </>)
-  }
-
-function  RodaTraseira(){
-  return (<>
-
-
-
-    <svg style={{zIndex:-100, marginLeft: -260, marginBottom:20}} ref={boxRef}  xmlns="http://www.w3.org/2000/svg"
-    width="90px" height="80px" viewBox="133 411 240 217">
-      <g>
-        <defs>
-          <path id="s-Path_1-d1224" d="M374.14287680140166 541.7453284624651 C377.3413203811681 503.36400550526673 373.5301108440728 427.62027263718926 298.7214839433677 414.1997952504605 C285.51569701058054 412.0339157871361 223.69208316627515 403.65138559915795 185.18205724074642 427.4695536144414 C150.35274764141198 446.09441569038614 134.9755013049052 492.27476032938716 134.12334293545425 520.3020893523885 C131.72650818460727 553.9860495117903 163.9914664850994 617.954921107121 254.5900593707485 627.8307743492471 C338.8157403046006 632.0953657889359 372.1548382009268 556.6314398218152 374.14287680140166 541.7453284624651 Z "></path>
-        </defs>
-        <g >
-          <use  xlinkHref="#s-Path_1-d1224" fill="#2D2B2B" fill-opacity="1.0"></use>
-        </g>
-      </g>
-      <g>
-        <defs>
-          <path id="s-Path_2-d1224" d="M186.0 441.0 C197.40965297351786 449.6975867566205 196.1895426120223 454.88149846742414 202.7895426120223 465.58310729634377 "></path>
-        </defs>
-        <g >
-          <use  xlinkHref="#s-Path_2-d1224" fill="none" stroke-width="4.0" stroke="#817E7E" stroke-linecap="round" stroke-linejoin="round"></use>
-        </g>
-      </g>
-      <g>
-        <defs>
-          <path id="s-Path_3-d1224" d="M204.0 430.0 C209.39758675662054 440.3008044144598 210.1814984674241 442.6790852240447 216.7814984674241 453.3806940529643 "></path>
-        </defs>
-        <g >
-          <use  xlinkHref="#s-Path_3-d1224" fill="none" stroke-width="4.0" stroke="#817E7E" stroke-linecap="round" stroke-linejoin="round"></use>
-        </g>
-      </g>
-      <g>
-        <defs>
-          <path id="s-Path_4-d1224" d="M335.0 473.0 C346.40965297351784 481.6975867566205 345.1895426120223 486.88149846742414 351.7895426120223 497.58310729634377 "></path>
-        </defs>
-        <g transform="rotate(113.35629412523093 343.39477130601114 485.2915536481719)" >
-          <use  xlinkHref="#s-Path_4-d1224" fill="none" stroke-width="4.0" stroke="#817E7E" stroke-linecap="round" stroke-linejoin="round"></use>
-        </g>
-      </g>
-      <g>
-        <defs>
-          <path id="s-Path_5-d1224" d="M344.0 490.0 C349.3975867566205 500.3008044144598 350.1814984674241 502.6790852240447 356.78149846742406 513.3806940529644 "></path>
-        </defs>
-        <g transform="rotate(96.69398425690783 350.39074923371203 501.6903470264822)" >
-          <use  xlinkHref="#s-Path_5-d1224" fill="none" stroke-width="4.0" stroke="#817E7E" stroke-linecap="round" stroke-linejoin="round"></use>
-        </g>
-      </g>
-      <g>
-        <defs>
-          <path id="s-Path_6-d1224" d="M177.0 568.0 C188.40965297351786 576.6975867566205 187.1895426120223 581.8814984674241 193.7895426120223 592.5831072963438 "></path>
-        </defs>
-        <g transform="rotate(258.6339539927604 185.39477130601114 580.2915536481719)" >
-          <use  xlinkHref="#s-Path_6-d1224" fill="none" stroke-width="4.0" stroke="#817E7E" stroke-linecap="round" stroke-linejoin="round"></use>
-        </g>
-      </g>
-      <g>
-        <defs>
-          <path id="s-Path_7-d1224" d="M170.0 551.0 C175.39758675662054 561.3008044144598 176.1814984674241 563.6790852240447 182.7814984674241 574.3806940529644 "></path>
-        </defs>
-        <g transform="rotate(258.6339539927604 176.39074923371203 562.6903470264822)" >
-          <use  xlinkHref="#s-Path_7-d1224" fill="none" stroke-width="4.0" stroke="#817E7E" stroke-linecap="round" stroke-linejoin="round"></use>
-        </g>
-      </g>
-      <g>
-        <defs>
-          <path id="s-Path_8-d1224" d="M294.0 582.0 C305.40965297351784 590.6975867566205 304.1895426120223 595.8814984674241 310.7895426120223 606.5831072963438 "></path>
-        </defs>
-        <g transform="rotate(191.60361279685682 302.39477130601114 594.2915536481719)" >
-          <use  xlinkHref="#s-Path_8-d1224" fill="none" stroke-width="4.0" stroke="#817E7E" stroke-linecap="round" stroke-linejoin="round"></use>
-        </g>
-      </g>
-      <g>
-        <defs>
-          <path id="s-Path_9-d1224" d="M280.0 591.0 C285.3975867566205 601.3008044144598 286.1814984674241 603.6790852240447 292.78149846742406 614.3806940529644 "></path>
-        </defs>
-        <g transform="rotate(191.60361279685682 286.39074923371203 602.6903470264822)" >
-          <use  xlinkHref="#s-Path_9-d1224" fill="none" stroke-width="4.0" stroke="#817E7E" stroke-linecap="round" stroke-linejoin="round"></use>
-        </g>
-      </g>
-      <g>
-        <defs>
-          <ellipse cx="255.05564627058254" cy="519.6457768240859" rx="66.05564627058253" ry="63.645776824086" id="s-Ellipse_1-d1224-path"></ellipse>
-        </defs>
-        <g >
-          <use  xlinkHref="#s-Ellipse_1-d1224-path" fill="#999696" fill-opacity="1.0"></use>
-        </g>
-      </g>
-      <g>
-        <defs>
-          <ellipse cx="256.45155040110114" cy="519.1041752773176" rx="53.45155040110116" ry="52.10417527731761" id="s-Ellipse_2-d1224-path"></ellipse>
-        </defs>
-        <g >
-          <use  xlinkHref="#s-Ellipse_2-d1224-path" fill="#D9D9D9" fill-opacity="1.0"></use>
-        </g>
-      </g>
-      <g>
-        <defs>
-          <path id="s-Path_10-d1224" d="M234.38779809307297 471.0 C234.38779809307297 471.0 206.9651625734364 476.3530373027 203.0 508.7691873640463 "></path>
-        </defs>
-        <g >
-          <use  xlinkHref="#s-Path_10-d1224" fill="none" stroke-width="4.0" stroke="#404040" stroke-linecap="round" stroke-linejoin="round"></use>
-        </g>
-      </g>
-      <g>
-        <defs>
-          <path id="s-Path_11-d1224" d="M202.0 525.0 C204.74183434358318 547.4137798292498 218.5473225684519 568.2787733911593 255.42132869875545 569.8819910489987 "></path>
-        </defs>
-        <g >
-          <use  xlinkHref="#s-Path_11-d1224" fill="none" stroke-width="4.0" stroke="#404040" stroke-linecap="round" stroke-linejoin="round"></use>
-        </g>
-      </g>
-      <g>
-        <defs>
-          <path id="s-Path_12-d1224" d="M246.0 469.78590586986024 C251.9154235376301 465.4107499738579 264.6298678808724 466.7960074677867 267.83936616591967 469.7859058698603 "></path>
-        </defs>
-        <g >
-          <use  xlinkHref="#s-Path_12-d1224" fill="none" stroke-width="4.0" stroke="#404040" stroke-linecap="round" stroke-linejoin="round"></use>
-        </g>
-      </g>
-
-      <g>
-        <defs>
-          <path id="s-Path_14-d1224" d="M309.6461282318238 521.0 C309.6461282318238 521.0 310.6099621783951 562.2368509229282 263.0 569.8490718282959 "></path>
-        </defs>
-        <g >
-          <use  xlinkHref="#s-Path_14-d1224" fill="none" stroke-width="4.0" stroke="#404040" stroke-linecap="round" stroke-linejoin="round"></use>
-        </g>
-      </g>
-      <g>
-        <defs>
-          <path id="s-Path_15-d1224" d="M256.2895826159882 506.11618221153697 C251.0599818112599 507.552664635455 242.25094759162454 509.15266463545504 243.0509475916245 521.952664635455 C244.6464304818067 532.3662159649083 253.4509475916243 534.0475239416278 260.32547990361735 532.0226798376302 C271.9729095567037 526.8159041729036 271.1954951057926 522.7978357336326 271.15935822725055 517.9752501845438 C269.53225556834406 511.1639574099994 264.70111498144547 505.07744123271 256.2895826159882 506.11618221153697 Z "></path>
-        </defs>
-        <g >
-          <use  xlinkHref="#s-Path_15-d1224" fill="none" stroke-width="6.0" stroke="#404040" stroke-linecap="round" stroke-linejoin="round"></use>
-        </g>
-      </g>
-    </svg>
-
-
-
-
-
-    </>)
-}
-
-function  RodaDianteira(){
-  return (<>
-
-
-
-    <svg style={{zIndex:-10, marginBottom:20, marginLeft: 22}}
-    ref={bol2Ref}  xmlns="http://www.w3.org/2000/svg"
-    width="80px" height="70px" viewBox="133 411 240 217">
-      <g>
-        <defs>
-          <path id="s-Path_1-d1224" d="M374.14287680140166 541.7453284624651 C377.3413203811681 503.36400550526673 373.5301108440728 427.62027263718926 298.7214839433677 414.1997952504605 C285.51569701058054 412.0339157871361 223.69208316627515 403.65138559915795 185.18205724074642 427.4695536144414 C150.35274764141198 446.09441569038614 134.9755013049052 492.27476032938716 134.12334293545425 520.3020893523885 C131.72650818460727 553.9860495117903 163.9914664850994 617.954921107121 254.5900593707485 627.8307743492471 C338.8157403046006 632.0953657889359 372.1548382009268 556.6314398218152 374.14287680140166 541.7453284624651 Z "></path>
-        </defs>
-        <g >
-          <use  xlinkHref="#s-Path_1-d1224" fill="#2D2B2B" fill-opacity="1.0"></use>
-        </g>
-      </g>
-      <g>
-        <defs>
-          <path id="s-Path_2-d1224" d="M186.0 441.0 C197.40965297351786 449.6975867566205 196.1895426120223 454.88149846742414 202.7895426120223 465.58310729634377 "></path>
-        </defs>
-        <g >
-          <use  xlinkHref="#s-Path_2-d1224" fill="none" stroke-width="4.0" stroke="#817E7E" stroke-linecap="round" stroke-linejoin="round"></use>
-        </g>
-      </g>
-      <g>
-        <defs>
-          <path id="s-Path_3-d1224" d="M204.0 430.0 C209.39758675662054 440.3008044144598 210.1814984674241 442.6790852240447 216.7814984674241 453.3806940529643 "></path>
-        </defs>
-        <g >
-          <use  xlinkHref="#s-Path_3-d1224" fill="none" stroke-width="4.0" stroke="#817E7E" stroke-linecap="round" stroke-linejoin="round"></use>
-        </g>
-      </g>
-      <g>
-        <defs>
-          <path id="s-Path_4-d1224" d="M335.0 473.0 C346.40965297351784 481.6975867566205 345.1895426120223 486.88149846742414 351.7895426120223 497.58310729634377 "></path>
-        </defs>
-        <g transform="rotate(113.35629412523093 343.39477130601114 485.2915536481719)" >
-          <use  xlinkHref="#s-Path_4-d1224" fill="none" stroke-width="4.0" stroke="#817E7E" stroke-linecap="round" stroke-linejoin="round"></use>
-        </g>
-      </g>
-      <g>
-        <defs>
-          <path id="s-Path_5-d1224" d="M344.0 490.0 C349.3975867566205 500.3008044144598 350.1814984674241 502.6790852240447 356.78149846742406 513.3806940529644 "></path>
-        </defs>
-        <g transform="rotate(96.69398425690783 350.39074923371203 501.6903470264822)" >
-          <use  xlinkHref="#s-Path_5-d1224" fill="none" stroke-width="4.0" stroke="#817E7E" stroke-linecap="round" stroke-linejoin="round"></use>
-        </g>
-      </g>
-      <g>
-        <defs>
-          <path id="s-Path_6-d1224" d="M177.0 568.0 C188.40965297351786 576.6975867566205 187.1895426120223 581.8814984674241 193.7895426120223 592.5831072963438 "></path>
-        </defs>
-        <g transform="rotate(258.6339539927604 185.39477130601114 580.2915536481719)" >
-          <use  xlinkHref="#s-Path_6-d1224" fill="none" stroke-width="4.0" stroke="#817E7E" stroke-linecap="round" stroke-linejoin="round"></use>
-        </g>
-      </g>
-      <g>
-        <defs>
-          <path id="s-Path_7-d1224" d="M170.0 551.0 C175.39758675662054 561.3008044144598 176.1814984674241 563.6790852240447 182.7814984674241 574.3806940529644 "></path>
-        </defs>
-        <g transform="rotate(258.6339539927604 176.39074923371203 562.6903470264822)" >
-          <use  xlinkHref="#s-Path_7-d1224" fill="none" stroke-width="4.0" stroke="#817E7E" stroke-linecap="round" stroke-linejoin="round"></use>
-        </g>
-      </g>
-      <g>
-        <defs>
-          <path id="s-Path_8-d1224" d="M294.0 582.0 C305.40965297351784 590.6975867566205 304.1895426120223 595.8814984674241 310.7895426120223 606.5831072963438 "></path>
-        </defs>
-        <g transform="rotate(191.60361279685682 302.39477130601114 594.2915536481719)" >
-          <use  xlinkHref="#s-Path_8-d1224" fill="none" stroke-width="4.0" stroke="#817E7E" stroke-linecap="round" stroke-linejoin="round"></use>
-        </g>
-      </g>
-      <g>
-        <defs>
-          <path id="s-Path_9-d1224" d="M280.0 591.0 C285.3975867566205 601.3008044144598 286.1814984674241 603.6790852240447 292.78149846742406 614.3806940529644 "></path>
-        </defs>
-        <g transform="rotate(191.60361279685682 286.39074923371203 602.6903470264822)" >
-          <use  xlinkHref="#s-Path_9-d1224" fill="none" stroke-width="4.0" stroke="#817E7E" stroke-linecap="round" stroke-linejoin="round"></use>
-        </g>
-      </g>
-      <g>
-        <defs>
-          <ellipse cx="255.05564627058254" cy="519.6457768240859" rx="66.05564627058253" ry="63.645776824086" id="s-Ellipse_1-d1224-path"></ellipse>
-        </defs>
-        <g >
-          <use  xlinkHref="#s-Ellipse_1-d1224-path" fill="#999696" fill-opacity="1.0"></use>
-        </g>
-      </g>
-      <g>
-        <defs>
-          <ellipse cx="256.45155040110114" cy="519.1041752773176" rx="53.45155040110116" ry="52.10417527731761" id="s-Ellipse_2-d1224-path"></ellipse>
-        </defs>
-        <g >
-          <use  xlinkHref="#s-Ellipse_2-d1224-path" fill="#D9D9D9" fill-opacity="1.0"></use>
-        </g>
-      </g>
-      <g>
-        <defs>
-          <path id="s-Path_10-d1224" d="M234.38779809307297 471.0 C234.38779809307297 471.0 206.9651625734364 476.3530373027 203.0 508.7691873640463 "></path>
-        </defs>
-        <g >
-          <use  xlinkHref="#s-Path_10-d1224" fill="none" stroke-width="4.0" stroke="#404040" stroke-linecap="round" stroke-linejoin="round"></use>
-        </g>
-      </g>
-      <g>
-        <defs>
-          <path id="s-Path_11-d1224" d="M202.0 525.0 C204.74183434358318 547.4137798292498 218.5473225684519 568.2787733911593 255.42132869875545 569.8819910489987 "></path>
-        </defs>
-        <g >
-          <use  xlinkHref="#s-Path_11-d1224" fill="none" stroke-width="4.0" stroke="#404040" stroke-linecap="round" stroke-linejoin="round"></use>
-        </g>
-      </g>
-      <g>
-        <defs>
-          <path id="s-Path_12-d1224" d="M246.0 469.78590586986024 C251.9154235376301 465.4107499738579 264.6298678808724 466.7960074677867 267.83936616591967 469.7859058698603 "></path>
-        </defs>
-        <g >
-          <use  xlinkHref="#s-Path_12-d1224" fill="none" stroke-width="4.0" stroke="#404040" stroke-linecap="round" stroke-linejoin="round"></use>
-        </g>
-      </g>
-
-      <g>
-        <defs>
-          <path id="s-Path_14-d1224" d="M309.6461282318238 521.0 C309.6461282318238 521.0 310.6099621783951 562.2368509229282 263.0 569.8490718282959 "></path>
-        </defs>
-        <g >
-          <use  xlinkHref="#s-Path_14-d1224" fill="none" stroke-width="4.0" stroke="#404040" stroke-linecap="round" stroke-linejoin="round"></use>
-        </g>
-      </g>
-      <g>
-        <defs>
-          <path id="s-Path_15-d1224" d="M256.2895826159882 506.11618221153697 C251.0599818112599 507.552664635455 242.25094759162454 509.15266463545504 243.0509475916245 521.952664635455 C244.6464304818067 532.3662159649083 253.4509475916243 534.0475239416278 260.32547990361735 532.0226798376302 C271.9729095567037 526.8159041729036 271.1954951057926 522.7978357336326 271.15935822725055 517.9752501845438 C269.53225556834406 511.1639574099994 264.70111498144547 505.07744123271 256.2895826159882 506.11618221153697 Z "></path>
-        </defs>
-        <g >
-          <use  xlinkHref="#s-Path_15-d1224" fill="none" stroke-width="6.0" stroke="#404040" stroke-linecap="round" stroke-linejoin="round"></use>
-        </g>
-      </g>
-    </svg>
-
-
-
-
-
-    </>)
-}
-
-
-  function RenderSVG(fill: string, cx: any, cy: any) {
-
-console.log(cy);
-
+  function Boy() {
     return (
-      <svg style={{zIndex:90000}}
-        xmlns="http://www.w3.org/2000/svg"
-        width="50%"
-        height="80%"
-        viewBox="131 333 148 166"
-        preserveAspectRatio="none"
-      >
-        <g>
-          <defs>
-            <path
-              id="s-Path_13-d1224"
-              d="M179.592030494593 340.78364639932926 C161.76972464354725 352.62758383198627 152.21907810711485 374.43855767168293 145.23432851809517 390.9947337602849 C138.24957892907548 407.5509098488869 125.29874584261623 436.5270595558002 136.20602726879656 456.7007039635142 C147.1133086949769 476.8743483712282 180.11828942410588 492.03017784737347 185.10932570249773 494.8201981272198 C190.10036198088957 497.61021840706616 205.52625014953344 502.9176569682358 224.98432288690034 494.8201981272198 C244.44239562426725 486.72273928620376 264.9814683352817 474.9497360724488 274.1384074664154 453.18969792212033 C283.29534659754916 431.4296597717918 264.1840718516565 408.2469744525961 256.0818049678181 390.9947337602849 C247.97953808397963 373.7424930679737 233.966013247133 346.52890824324174 224.98432288690026 340.78364639932926 C216.00263252666755 335.0383845554168 197.41433634563873 328.9397089666723 179.592030494593 340.78364639932926 Z "
-            ></path>
-          </defs>
+      <>
+        <svg
+          style={{ marginLeft: 50, marginTop: 130, marginBottom: 20 }}
+          xmlns="http://www.w3.org/2000/svg"
+          width="220.5441124364054"
+          height="272.2567872621796"
+          viewBox="58.000008314748555 134.74321886896732 220.5441124364054 272.2567872621796"
+          preserveAspectRatio="none"
+        >
           <g>
-            <use
-              xlinkHref="#s-Path_13-d1224"
-              fill="#E5591F"
-              fill-opacity="1.0"
-            ></use>
+            <defs>
+              <path
+                id="s-Path_2-d1224"
+                d="M214.97196109448765 272.9856452775814 C214.97196109448765 272.9856452775814 270.58996367149587 308.5372697354062 244.30778927248812 325.83459544152487 C238.73278258178948 331.0989989173001 215.63632629175248 345.7641228855311 200.90238003776327 334.85928711428244 C194.13272905620076 323.9544513430337 223.20240680055764 312.2975579323886 223.20240680055764 312.2975579323886 C223.20240680055764 312.2975579323886 204.8845276739766 315.6818173096726 200.90238003776327 320.9462207854479 C196.92023240154992 326.21062426122313 187.76129283825935 336.3634023930753 205.68095720121917 342.7558923279453 C220.01668869158698 344.6360364264365 249.88279596318665 337.49148885217005 255.059587890264 316.80990376876736 C260.23637981734134 296.12831868536466 214.97196109448765 272.9856452775814 214.97196109448765 272.9856452775814 Z "
+              ></path>
+            </defs>
+            <g>
+              <use
+                xlinkHref="#s-Path_2-d1224"
+                fill="#161616"
+                fill-opacity="1.0"
+                stroke-width="1.0"
+                stroke="#404040"
+                stroke-linecap="square"
+              ></use>
+            </g>
           </g>
-        </g>
-        <g>
-          <defs>
-            <path
-              id="s-Path_24-d1224"
-              d="M157.0 428.4602924264642 L245.02593718066214 424.0 L252.04794926344996 439.0471687488311 Z "
-            ></path>
-          </defs>
           <g>
-            <use
-              xlinkHref="#s-Path_24-d1224"
-              fill="#BE4817"
-              fill-opacity="1.0"
-            ></use>
+            <defs>
+              <path
+                id="s-Path_1-d1224"
+                d="M227.30648005578905 245.17355959794378 C227.5380980766723 259.6623838221756 225.94523902218702 270.5672195934243 235.90060811272028 276.95970952829424 C241.0061720031946 280.2380677172164 252.08160641058083 286.9779062880642 261.3385802089814 297.07778502251455 C270.1318341232168 306.6717192983524 277.2842524864887 319.29748903208304 276.12029923847456 334.8681477618218 C273.7310106567466 366.8305974361714 252.22741342119474 407.8177387832786 221.5648766223523 405.9375946847874 C190.9023398235099 404.0574505862962 139.53263531635844 392.7765859953493 144.31121247981437 345.02092589367396 C147.49693058878495 355.9257616649227 149.08978964327022 378.11146202711825 172.98267546055 387.8882113392723 C196.87556127782986 397.6649606514263 225.94523902218697 410.07391170146803 241.8738295670402 395.78481655293524 C249.04169531222408 388.26424015897055 276.91672876571727 366.4545686164731 271.7399368386399 326.21948490876247 C268.95243349329064 316.8187644163067 267.7577892024266 305.5378998253598 250.63455436670944 290.8727758571288 C244.66133291238944 284.8563147419571 218.31413723523661 278.8164242950855 227.30648005578905 245.17355959794378 Z "
+              ></path>
+            </defs>
+            <g>
+              <use
+                xlinkHref="#s-Path_1-d1224"
+                fill="#030303"
+                fill-opacity="1.0"
+                stroke-width="1.0"
+                stroke="#404040"
+                stroke-linecap="square"
+              ></use>
+            </g>
           </g>
-        </g>
-        <g>
-          <defs>
-            <path
-              id="s-Path_25-d1224"
-              d="M192.31367781092206 378.0 L172.0 398.618322154921 L188.0503133320866 412.6623463204968 L210.11949416370567 398.618322154921 Z "
-            ></path>
-          </defs>
           <g>
-            <use
-              xlinkHref="#s-Path_25-d1224"
-              fill="#BE4817"
-              fill-opacity="1.0"
-            ></use>
+            <defs>
+              <path
+                id="s-Path_5-d1224"
+                d="M170.0 363.3966406748314 C170.0 363.3966406748314 171.01706289342513 340.068106055248 183.3617205656863 343.07633661283387 C195.70637823794752 346.0845671704198 218.80283452798466 351.7249994658932 226.76712980041125 346.8366248098162 C234.73142507283788 341.9482501537392 261.01359947184574 324.43421869245793 260.6153847082243 318.79378639698444 C258.6243108901177 329.32259334853495 246.6778679814777 338.94001959615343 240.30643176353647 343.0763366128339 C233.53678078197387 347.5886824492127 217.60819023712065 357.7414605810649 189.33494202000622 346.8366248098162 C182.1670762748223 346.8366248098162 181.768861511201 343.82839425223034 178.98135816585167 350.9729418264967 C176.19385482050234 358.1174894007631 174.2027810023957 377.6709880250711 193.7153044198409 377.6709880250711 C213.22782783728604 377.6709880250711 257.03145183563237 346.8366248098162 257.03145183563237 346.8366248098162 L240.3064317635364 363.3966406748314 C240.3064317635364 363.3966406748314 202.0778144558887 387.8237661569232 189.33494202000617 382.55936268114806 C176.59206958412366 377.2949592053729 170.0 363.3966406748314 170.0 363.3966406748314 Z "
+              ></path>
+            </defs>
+            <g>
+              <use
+                xlinkHref="#s-Path_5-d1224"
+                fill="#030303"
+                fill-opacity="1.0"
+                stroke-width="1.0"
+                stroke="#404040"
+                stroke-linecap="square"
+              ></use>
+            </g>
           </g>
-        </g>
-        <g>
-          <defs>
-            <path
-              id="s-Path_26-d1224"
-              d="M161.0 370.00274430041225 L192.59905437254545 352.0 L228.7122593697401 370.0027443004122 L192.59905437254545 363.53616270743726 Z "
-            ></path>
-          </defs>
           <g>
-            <use
-              xlinkHref="#s-Path_26-d1224"
-              fill="#BE4817"
-              fill-opacity="1.0"
-            ></use>
+            <defs>
+              <path
+                id="s-Path_6-d1224"
+                d="M180.1154459029179 355.76461464212014 C175.1211438431211 347.0085648491948 179.1032914793345 365.05794819470975 190.651519624353 365.05794819470975 C193.6609547493432 365.05794819470975 198.32001952142616 365.05794819470975 204.00854655840482 364.5721533710076 C220.1488363271548 363.1937879045623 244.57681487026986 357.9045298834988 263.126606603435 337.60784435673895 C244.41051271323258 348.5126801279877 242.4194388951259 357.91340062044344 199.81045918764357 362.42574645682225 C195.0318820241876 363.17780409621867 185.10974796271472 364.52066443504555 180.1154459029179 355.76461464212014 Z "
+              ></path>
+            </defs>
+            <g>
+              <use
+                xlinkHref="#s-Path_6-d1224"
+                fill="#030303"
+                fill-opacity="1.0"
+                stroke-width="1.0"
+                stroke="#404040"
+                stroke-linecap="square"
+              ></use>
+            </g>
           </g>
-        </g>
-        <g>
-          <defs>
-            <path
-              id="s-Path_27-d1224"
-              d="M172.15816093415523 369.7430224192957 C168.95803539814702 371.7237931643046 166.34484848892416 379.16022227501753 169.2741776576894 380.66051053811225 C172.2035068264546 382.160798801207 178.1417596131542 384.5289413903271 183.06741567745124 380.6605105381123 C187.99307174174825 376.7920796858975 187.42200670060873 372.3867877016497 185.07370484396205 369.74302241929564 C182.72540298731536 367.09925713694156 175.35828647016348 367.76225167428674 172.15816093415523 369.7430224192957 Z "
-            ></path>
-          </defs>
           <g>
-            <use
-              xlinkHref="#s-Path_27-d1224"
-              fill="#FFFFFF"
-              fill-opacity="1.0"
-            ></use>
+            <defs>
+              <path
+                id="s-Path_7-d1224"
+                d="M263.51160024853783 322.88379899693075 C267.69201607342 332.6161853413445 265.18752900111525 336.701104670826 265.18752900111525 336.701104670826 L262.0 338.6360664584751 C262.0 338.6360664584751 266.1616037117597 337.4459328752227 263.51160024853783 322.88379899693075 Z "
+              ></path>
+            </defs>
+            <g>
+              <use
+                xlinkHref="#s-Path_7-d1224"
+                fill="#161616"
+                fill-opacity="1.0"
+                stroke-width="1.0"
+                stroke="#404040"
+                stroke-linecap="square"
+              ></use>
+            </g>
           </g>
-        </g>
-        <g>
-          <defs>
-            <path
-              id="s-Path_28-d1224"
-              d="M198.51621483888962 369.4303192706148 C196.3245942825352 370.98163906825704 195.2699065771617 374.1891394592562 196.56182083193463 377.24099904085784 C196.7793595704953 377.7548858419309 197.0634325582503 378.2643596899028 197.4198151056874 378.7607704249322 C199.89267445276298 382.20525426661874 204.81624033097333 381.28005980531805 208.75762058494425 377.74018532360316 C212.69900083891517 374.2003108418883 211.5007616754921 371.4296792106693 208.850892914443 369.4303192706148 C206.2010241533939 367.4309593305603 201.07687101000843 367.6177807809143 198.51621483888962 369.4303192706148 Z "
-            ></path>
-          </defs>
-          <g transform="rotate(28.577003454168953 203.64653942737476 374.4599270287314)">
-            <use
-              xlinkHref="#s-Path_28-d1224"
-              fill="#FFFFFF"
-              fill-opacity="1.0"
-            ></use>
-          </g>
-        </g>
-        <g>
-          <defs>
-            <path
-              id="s-Exclusion_1-d1224"
-              d="M224.641200647271 411.04810821827937 C249.39257910323246 411.09562886593324 252.68632496417698 432.3629292520707 252.68632496417698 432.3629292520707 C252.68632496417698 432.3629292520707 256.12239961455873 439.6448080064127 255.82317993408648 446.4787000828055 C247.74958973338474 462.0901072626832 238.2245459722237 465.7754519921452 224.35240013420074 471.80882405496243 C199.69645002618216 474.83276236801345 189.88187577096852 453.6798855804996 189.88187577096852 453.6798855804996 L185.64491547313455 439.0047670487515 C185.64491547313455 439.0047670487515 176.33784547147573 442.0511057303147 172.82841785562653 453.6798855804996 C165.05562576094184 478.85111730463257 162.63443809018855 472.90761181830925 155.98365246421196 464.2804945813524 C150.08522527567695 459.91674182323106 144.1343935704902 449.5150086967998 144.1343935704902 449.5150086967998 C144.1343935704902 449.5150086967998 153.31397702930846 443.04298839164613 155.98365246421196 437.4081559705973 C152.38367425376916 426.00524219582985 159.56985684775964 416.9356742310692 159.56985684775964 416.9356742310692 C159.56985684775964 416.9356742310692 175.9050858910547 416.01369878909577 185.64491547313455 424.53024375875697 C193.6292420345174 424.5200597707471 216.69249396083765 409.7466568415562 224.641200647271 411.04810821827937 Z M224.07469703053695 406.0 C214.68062516720212 406.0 198.31483544584802 415.70772674678255 189.02949906123177 416.5654034261841 C188.78518385310974 416.58798091428685 188.54580507882713 416.5988487221194 188.3109035352361 416.5988487221194 C181.94135407176736 416.5988487221194 178.8544948445803 408.5975017392922 169.38928476025734 408.5975017392922 C165.6662569721141 408.5975017392922 157.44541471130637 413.1491807411998 151.16085609711934 416.5988487221194 C149.6263139777832 441.68157699837076 146.49492735202605 441.4556299161628 142.884920938648 444.02048996502856 C134.76075624723484 450.0963407485166 130.22453708463829 451.0335169728901 142.884920938648 465.95019549387314 C155.54528565919327 480.8668740148562 156.9739852796423 496.2553952503364 175.08549316795126 500.26638167911216 C177.292136494563 500.7550503622852 199.54298191816537 500.26638167911216 201.88078514388252 500.26638167911216 C218.731110720079 500.26638167911216 239.92958115628326 490.4801962478261 250.22139517366978 484.0068094725492 C261.9410822458391 476.6352787404663 278.82816703402125 448.62687154192406 280.06495417890403 445.636521509644 C281.3017030568577 442.6461523438995 273.06023109463274 444.0352992665468 269.7827068937644 442.37629396067814 C266.50518269289614 440.71730778827396 264.25478113298686 441.35898678700437 259.75126106121036 435.35429335796897 C255.24772185596927 429.3495807954691 255.84715416509724 418.43214075606255 247.9643198613451 413.28510487296415 C240.08146642412837 408.1380689898658 233.9306124598244 406.42466724444114 224.641200647271 406.0123028176696 C224.45535730664218 406.00405629447266 224.26649087862333 406.0 224.07469703053695 406.0 Z "
-            ></path>
-          </defs>
           <g>
-            <use id='idbarba'
-              xlinkHref="#s-Exclusion_1-d1224"
-              fill="#000000"
-              fill-opacity="1.0"
-            ></use>
+            <defs>
+              <path
+                id="s-Path_8-d1224"
+                d="M207.0851269835091 260.7787048030367 C207.0851269835091 260.7787048030367 220.0902054639476 249.93889991479625 237.16625368420904 254.45381075264422 C237.84929561301948 273.37343712076887 243.54131168644 288.4231399135953 243.54131168644 288.4231399135953 L234.2064053260304 288.4231399135953 C234.2064053260304 288.4231399135953 219.40716353513722 274.0184243833186 213.71514746171673 273.15844136658563 C212.121382961159 298.0979488518409 212.121382961159 293.7980337681762 212.121382961159 293.7980337681762 L162.48700280093243 315.2976091864997 L151.1029706540915 311.4276856112015 L147.23239972416556 288.42313991359526 C147.23239972416556 288.42313991359526 136.07604822026147 283.4782375673809 127.1965031457255 286.05818661757974 C122.64289028698911 286.27318237176297 123.09825157286278 288.42313991359526 123.09825157286278 288.42313991359526 L119.0 281.32828002554857 L127.19650314572547 273.15844136658563 L140.85734172193466 273.1584413665856 L140.8573417219346 269.9335050538371 L147.2323997241655 269.9335050538371 C147.2323997241655 269.9335050538371 152.46905451171224 265.63358997017247 162.48700280093237 263.4836324283401 C172.50495109015247 261.3336748865077 207.0851269835091 260.7787048030367 207.0851269835091 260.7787048030367 Z "
+              ></path>
+            </defs>
+            <g>
+              <use
+                xlinkHref="#s-Path_8-d1224"
+                fill="#161616"
+                fill-opacity="1.0"
+              ></use>
+            </g>
           </g>
-        </g>
-        <g>
-          <defs>
-            <path
-              id="s-Path_29-d1224"
-              d="M176.9664719004475 369.82433666305064 C182.58512091866385 367.5923948215256 186.62179591467432 371.94935732550243 186.62179591467432 371.94935732550243 C186.62179591467432 371.94935732550243 185.99816135904268 368.4695795437912 182.35837403544537 367.19774370897125 C177.84083520149954 366.4274801657789 172.86970976746974 367.8861173061784 169.3175518535185 371.9493573255025 C167.14471774154345 375.1348458344781 168.3144072702631 380.23862329129156 168.3144072702631 380.23862329129156 C168.3144072702631 380.23862329129156 167.96220991374415 373.0594230878311 176.9664719004475 369.82433666305064 Z "
-            ></path>
-          </defs>
           <g>
-            <use
-              xlinkHref="#s-Path_29-d1224"
-              fill="#BE4817"
-              fill-opacity="1.0"
-            ></use>
+            <defs>
+              <path
+                id="s-Path_9-d1224"
+                d="M151.0 162.08839372865887 C154.42233784234625 154.60267064705783 158.5414956218952 135.9701209638614 179.81134446545087 138.30556640759232 C189.81748434203067 139.3001624770227 193.12192939966795 145.2297288577465 193.12192939966795 145.2297288577465 C193.12192939966795 145.2297288577465 202.66963624208245 131.1459528801261 218.46880446826106 135.6216351925627 C234.26797269443966 140.09731750499935 234.7264057286049 154.60267064705783 234.7264057286049 154.60267064705783 C243.67926772343947 152.99292775699146 251.0201598420491 158.09507184439175 251.0201598420491 158.09507184439175 C251.0201598420491 158.09507184439175 257.8985191269999 164.9280805901558 253.15876865914646 174.87404128445942 C263.69154747659894 172.38755111088352 280.01735464365004 174.8740412844594 278.43743782103223 188.3010882217693 C277.91079888015975 194.76596267306667 270.53785370794304 194.76596267306667 270.53785370794304 194.76596267306667 C270.53785370794304 194.76596267306667 275.8042431166692 207.19841354094623 264.2181864174716 211.67409585338285 C260.5235142323764 213.14311355434342 253.15876865914646 208.19300961037655 253.15876865914646 208.19300961037655 C253.15876865914646 208.19300961037655 264.2181864174717 218.13897030468016 260.0050748904907 228.58222903369898 C255.79196336350964 239.02548776271777 239.57461475575968 234.21968119167283 234.7264057286049 232.56061331142044 C237.13821084370198 236.90677997525887 243.8361785343213 242.58611355434684 242.23203558591308 249.3054441008855 C238.5455629998047 258.2568087257588 221.10516563689418 246.87303471478023 221.10516563689418 246.87303471478023 C221.10516563689418 246.87303471478023 238.63657514302923 251.44562335641746 240.00265900065017 247.97685238759107 C242.32548890802525 240.07778829017812 227.70790428206197 228.582229033699 227.70790428206197 228.582229033699 C227.70790428206197 228.582229033699 246.7343430250762 235.87591810042272 253.1587686591464 228.582229033699 C259.58319429321665 221.2885399669753 246.60539764581796 204.51887114068296 246.60539764581796 204.51887114068296 C246.60539764581796 204.51887114068296 261.5008630869606 211.85262159973345 265.0623741084311 209.46845765513925 C267.4420223625583 207.08429371054504 271.1949070829944 204.51887114068296 267.09665551013165 191.8341216438721 C274.3824360841098 195.4890494649871 281.1437565660791 185.76836009837808 273.0368636292699 178.98037691394433 C267.800208841723 175.5404448470126 262.77072329433213 174.41946555503006 250.24828793280705 176.78441885104564 C250.0206072898702 174.84945706339653 257.1247306989185 164.6071989528649 248.99219850863312 159.21108888355909 C247.5363772638457 158.7549189076525 242.7909787170389 154.60244952200554 231.8061558549246 157.75729460582937 C232.92135656323006 154.37546846024455 231.96849728232115 143.49760369351412 217.62461677730153 137.04773106801707 C204.0123656044468 132.45788684113222 193.12192939966795 148.08248566758374 193.12192939966795 148.08248566758374 C193.12192939966795 148.08248566758374 189.12757296833544 140.35704490462106 174.4842219106458 140.5190170829755 C160.68505854391566 140.84042026692524 151.0 162.08839372865887 151.0 162.08839372865887 Z "
+              ></path>
+            </defs>
+            <g>
+              <use
+                xlinkHref="#s-Path_9-d1224"
+                fill="#030303"
+                fill-opacity="1.0"
+              ></use>
+            </g>
           </g>
-        </g>
-        <g>
-          <defs>
-            <path
-              id="s-Path_30-d1224"
-              d="M203.6946329241711 369.42750418744384 C209.66972015481247 369.7413031754135 211.5944539177009 374.5752817535938 211.5944539177009 374.5752817535938 C211.5944539177009 374.5752817535938 210.35471121842733 371.093084551993 208.5850201679347 369.42750418744384 C206.81532911744205 367.76192382289463 205.36335650950855 366.52531433723357 201.56295068475333 367.1770904520851 C197.76254485999812 367.82886656693665 194.5933635368578 372.44454218890314 195.0425682939867 374.5752817535938 C195.4917730511156 376.7060213182844 197.71954569352968 369.11370519947417 203.6946329241711 369.42750418744384 Z "
-            ></path>
-          </defs>
           <g>
-            <use
-              xlinkHref="#s-Path_30-d1224"
-              fill="#BE4817"
-              fill-opacity="1.0"
-            ></use>
+            <defs>
+              <path
+                id="s-Path_10-d1224"
+                d="M162.41525610309483 156.23188389597325 C162.41525610309483 156.23188389597325 162.34190765535243 156.167734397702 162.19515886238094 156.05104287430473 C160.62395177189228 154.80165236655898 150.63848545563664 145.31110962643356 132.17506232328714 146.26209658700674 C113.71163919093763 147.21308354757994 110.21053395434242 157.7953764266714 110.21053395434242 157.7953764266714 C110.21053395434242 157.7953764266714 79.76494550632961 155.35800169803437 82.79632660003136 175.06365447503163 C84.92212605373516 183.75952775841824 96.33565736285959 189.8433442963655 96.33565736285959 189.8433442963655 C96.33565736285959 189.8433442963655 78.01773927197439 192.85158125281495 74.43379877593159 198.4920255461577 C70.84985827988882 204.1324698395004 73.23915194391728 209.02085489373076 73.23915194391728 209.02085489373076 C73.23915194391728 209.02085489373076 56.51409629571779 204.1324698395004 58.10695873840348 216.91747690441056 C60.09803679176056 223.68601005642182 64.08019289847462 227.82233587153982 73.23915194391728 225.9421877737589 C68.06234900518888 233.46278016488253 60.09803679176056 226.69424701287124 58.10695873840348 242.48749103423086 C58.90338995974625 249.63205380579834 67.6641333945175 251.13617228402308 67.6641333945175 251.13617228402308 C67.6641333945175 251.13617228402308 61.69089923444622 253.01632038180395 64.47840850914613 263.1691201098208 C67.26591778384605 273.32191983783775 82.79632660003134 271.817801359613 82.79632660003134 271.817801359613 C82.79632660003134 271.817801359613 81.60167976801714 283.4747195658546 90.36242320278834 283.09868994629846 C99.1231666375595 282.72266032674224 103.1053227442737 275.5780975551748 103.1053227442737 275.5780975551748 C103.1053227442737 275.5780975551748 92.17706485597066 284.99080972065843 87.64915665598079 280.8220582619126 C84.25322550598838 271.5225357770182 87.64915665598082 266.8193290030486 87.64915665598082 266.8193290030486 C87.42276124598129 266.4986558139143 86.4333244190629 268.6364770748096 82.79632660003136 269.4916055791677 C79.1593287809998 270.3467340835258 72.12981441299942 270.7742983357049 67.6641333945175 266.8193290030486 C63.19845237603556 262.86435967039233 63.764440901034305 252.66247671520438 70.55630320101909 251.13617228402305 C77.34816550100385 249.60986785284172 64.6700225410323 252.17525336591603 62.2928707360376 247.15137340281217 C59.9157189310429 242.12749343970827 57.3817344722755 236.99672241355958 64.47840850914613 232.0797335135005 C71.5750825460168 227.16274461344142 77.12177009100435 229.19367481129203 77.91415402600256 224.38357697427762 C78.7065379610008 219.57347913726323 70.55630320101909 223.10088421774043 70.55630320101909 223.10088421774043 C67.72636057602537 223.95601272209856 67.4999651660259 225.77316079385952 62.29287073603754 221.497518272069 C60.59490516104134 220.5354987046661 56.0669969610515 211.44975834586123 62.29287073603754 210.0601745262793 C68.51874451102361 208.67059070669737 75.19740910600862 211.44975834586123 75.19740910600862 211.44975834586123 C75.19740910600862 211.44975834586123 70.78269855704164 202.36401798705631 78.36694484600159 197.87459333917627 C85.9511911349615 193.3851686912962 101.45927671992669 189.8433442963655 101.45927671992669 189.8433442963655 C101.45927671992669 189.8433442963655 89.12072628120879 187.07859597165518 84.93241178996374 176.38948966717882 C83.00805139871366 170.93804545189585 86.76779637229123 165.11515759742258 88.77765533279191 163.1349978496281 C93.05146839328748 159.33769003007262 107.11916256365961 159.18002851697184 112.09986158364848 159.9282659582852 C111.30747764865023 157.5766625713004 114.85581345832591 151.05630772556984 132.17506232328714 148.70470433858503 C149.49431118824833 146.35310095160025 162.41525610309483 156.23188389597325 162.41525610309483 156.23188389597325 Z "
+              ></path>
+            </defs>
+            <g>
+              <use
+                xlinkHref="#s-Path_10-d1224"
+                fill="#030303"
+                fill-opacity="1.0"
+              ></use>
+            </g>
           </g>
-        </g>
-        <g>
-          <defs>
-            <ellipse
-              cx={cx}
-              cy={cy}
-              rx="2.5"
-              ry="2.1"
-              id="s-Ellipse_2-d1224-path"
-            ></ellipse>
-          </defs>
           <g>
-            <use id="olhoEsquerdo"
-              xlinkHref="#s-Ellipse_2-d1224-path"
-              fill="#000000"
-              fill-opacity="1.0"
-            ></use>
+            <defs>
+              <path
+                id="s-Path_11-d1224"
+                d="M126.9917118899962 296.9552299257416 C138.3817928012931 320.17226556154736 124.68914684391515 282.87482172161174 117.84282386522615 276.4099314560229 C110.99650088653715 269.9450411904341 91.51081240873006 268.9504426880358 93.0907330961198 287.35051498240404 C94.67065378350955 305.7505872767723 111.38850914565984 314.20467454715754 126.99171188999614 313.7073752959585 C117.31618363609626 307.24248503036966 99.93705607480886 304.2586895231748 98.883775616549 287.350514982404 C97.83049515828915 281.3829239680143 101.51697676219861 275.91263220482364 106.78337905349781 276.40993145602283 C112.049781344797 276.9072307072221 115.60163097869929 273.7381942899358 126.9917118899962 296.9552299257416 Z "
+              ></path>
+            </defs>
+            <g>
+              <use
+                xlinkHref="#s-Path_11-d1224"
+                fill="#030303"
+                fill-opacity="1.0"
+              ></use>
+            </g>
           </g>
-        </g>
-        <g>
-          <defs>
-            <ellipse
-              cx="198.8808960936039"
-              cy="375.8808960936039"
-              rx="1.8808960936038943"
-              ry="1.8808960936038943"
-              id="s-Ellipse_3-d1224-path"
-            ></ellipse>
-          </defs>
-          <g>
-            <use id="olhoDireito"
-              xlinkHref="#s-Ellipse_3-d1224-path"
-              fill="#000000"
-              fill-opacity="1.0"
-            ></use>
-          </g>
-        </g>
-        <g>
-          <defs>
-            <path
-              id="s-Path_32-d1224"
-              d="M190.63682027849003 381.0 C190.63682027849003 381.0 179.14750717769618 389.54923385218905 176.34206736749394 394.89241394297505 C173.53662755729167 400.2355940337611 175.53774942306276 402.79094167392907 178.59914267981856 405.6762182129707 C181.66053593657435 408.5614947520123 185.57761459505772 412.0836101178717 192.51777377248743 408.93643810855076 C199.45793294991716 405.7892660992299 197.35565938287573 406.7184565367982 200.91910965725148 403.92071519227375 C204.48255993162726 401.12297384774934 209.25040884345844 395.6763810307244 206.1856187193424 392.50994555774344 C203.12082859522633 389.34351008476256 200.0610488867825 388.5097333735795 195.65260059516058 388.8735464434426 C191.2441523035387 389.23735951330576 189.63367569523464 393.5293156837276 189.63367569523464 394.89241394297505 C189.63367569523464 396.2555122022226 189.83552475985258 399.074586909147 194.39866986609132 399.28117149471746 C198.96181497233007 399.4877560802879 200.91910965725148 394.89241394297505 200.91910965725148 394.89241394297505 "
-            ></path>
-          </defs>
-          <g>
-            <use
-              xlinkHref="#s-Path_32-d1224"
-              fill="none"
-              stroke-width="1.0"
-              stroke="#922D03"
-              stroke-linecap="square"
-            ></use>
-          </g>
-        </g>
-        <g>
-          <defs>
-            <path
-              id="s-Path_33-d1224"
-              d="M166.7623601340627 390.7679239950074 C167.9236219313487 384.65601979876527 157.67167139003465 390.3314980114966 154.22311024376356 391.9956375743829 C150.77454909749247 393.65977713726926 145.17601051081564 400.5030360951712 152.84378644178742 401.0239388236816 C160.51156237275916 401.544841552192 165.60109833677672 396.8798281912495 166.7623601340627 390.7679239950074 Z "
-            ></path>
-          </defs>
-          <g>
-            <use
-              xlinkHref="#s-Path_33-d1224"
-              fill="#FF6F11"
-              fill-opacity="1.0"
-            ></use>
-          </g>
-        </g>
-        <g>
-          <defs>
-            <path
-              id="s-Path_34-d1224"
-              d="M219.02924575739297 382.62841205212385 C218.2558476839177 375.5389297119336 233.04794055355705 384.7953867412407 236.58433336475622 386.99095245417254 C240.12072617595535 389.18651816710434 250.25217831161123 397.6493636512613 238.59062253126703 397.2731844325405 C226.92906675092286 396.89700521381974 219.80264383086828 389.71789439231407 219.02924575739297 382.62841205212385 Z "
-            ></path>
-          </defs>
-          <g>
-            <use
-              xlinkHref="#s-Path_34-d1224"
-              fill="#FF6F11"
-              fill-opacity="1.0"
-            ></use>
-          </g>
-        </g>
-        <g>
-          <defs>
-            <path
-              id="s-Path_35-d1224"
-              d="M188.82777103517805 350.0 L186.06918083161915 357.62276029762876 L164.0 366.1494892552998 L164.25078614581386 362.8892693597197 Z "
-            ></path>
-          </defs>
-          <g>
-            <use
-              xlinkHref="#s-Path_35-d1224"
-              fill="#000000"
-              fill-opacity="1.0"
-            ></use>
-          </g>
-        </g>
-        <g>
-          <defs>
-            <path
-              id="s-Path_36-d1224"
-              d="M202.01252093262815 352.0 L198.0 357.616471131118 L222.57704228975751 365.8924139429751 L222.57704228975751 363.88612477646427 Z "
-            ></path>
-          </defs>
-          <g>
-            <use
-              xlinkHref="#s-Path_36-d1224"
-              fill="#000000"
-              fill-opacity="1.0"
-            ></use>
-          </g>
-        </g>
-        <g>
-          <defs>
-            <path
-              id="s-Path_38-d1224"
-              d="M266.3221668575397 434.4241887821435 C275.21759242261965 439.0042717421869 270.20940951804783 439.83049824520555 270.20940951804783 439.83049824520555 L269.01181769862495 439.1033889262702 L258.4224606647968 433.546437271795 L255.9145992066583 422.150074965329 C255.9145992066583 422.150074965329 260.3033567584007 419.14064121556277 260.80492905002836 415.50424210126187 C261.3065013416561 411.86784298696097 242.3155341743265 394.0667239078248 255.9145992066583 403.95367206576043 C269.5136642389901 413.8406202236961 257.42674129245967 429.84410582210006 266.3221668575397 434.4241887821435 Z "
-            ></path>
-          </defs>
-          <g>
-            <use
-              xlinkHref="#s-Path_38-d1224"
-              fill="#BE4817"
-              fill-opacity="1.0"
-            ></use>
-          </g>
-        </g>
-        <g>
-          <defs>
-            <path
-              id="s-Path_37-d1224"
-              d="M147.49560892307153 409.0 C147.49560892307153 409.0 144.99400049114843 424.7933166045838 144.48623257369826 429.7042643577071 C143.97846465624806 434.6152121108303 144.48623257369826 438.1056002424711 144.48623257369826 438.1056002424711 C144.48623257369826 438.1056002424711 137.51438455131128 444.05162207266096 135.33253825149262 443.49750237746895 C133.150691951674 442.94338268227693 142.48122698013754 439.097931742858 140.84983345939744 435.8485249301465 C140.9739429593543 429.4642912947617 147.49560892307153 409.0 147.49560892307153 409.0 Z "
-            ></path>
-          </defs>
-          <g>
-            <use
-              xlinkHref="#s-Path_37-d1224"
-              fill="#BE4817"
-              fill-opacity="1.0"
-            ></use>
-          </g>
-        </g>
-      </svg>
+        </svg>
+      </>
     );
   }
 
-  function InterativeSection()
-  {
-    return (<>
+  function Carro() {
+    return (
+      <>
+        <svg
+          ref={carRef}
+          style={{
+            zIndex: -20,
+            marginLeft: 50,
+            marginTop: 130,
+            marginBottom: 20,
+          }}
+          xmlns="http://www.w3.org/2000/svg"
+          width="104"
+          height="62"
+          viewBox="85 129 804 462"
+          preserveAspectRatio="none"
+        >
+          <g>
+            <defs>
+              <path
+                id="s-Path_31-d1224"
+                d="M98.17887878417974 499.81440622972093 C104.5799526806237 488.7624918883839 57.638870863076136 222.43608046722892 196.32803374432194 157.35885788449042 C335.01719662556775 92.28163530175192 553.719338092148 161.62621674237494 553.719338092148 161.62621674237494 C553.719338092148 161.62621674237494 632.6654769630109 229.90395846852664 708.4110966904607 376.06099935107045 C739.3494484101234 394.19727449707966 750.0178455548344 378.19467878001285 811.8945489941595 415.5340687865021 C829.6401970090305 429.05456251211797 848.7245225047532 501.4768653952097 855.8931470976129 531.0073514488496 C857.774811429404 538.7586936467573 858.835496430889 543.5548345230368 858.835496430889 543.5548345230368 L883.3728098637248 567.0253082414015 L875.904931862427 590.4957819597662 L668.9380272550293 590.4957819597662 C668.9380272550293 590.4957819597662 679.6064243997405 437.9377027903955 584.6576898118105 430.46982478909774 C489.7089552238806 423.00194678779997 454.50324464633377 478.4776119402984 448.1022063595069 499.8144062297208 C441.70116807268005 521.1512005191432 438.50064892926673 576.6268656716416 438.50064892926673 576.6268656716416 L368.0892277741726 576.6268656716416 C368.0892277741726 576.6268656716416 385.1586632057108 561.6911096690458 384.09182349123955 530.7527579493833 C383.0249837767683 499.8144062297208 381.9581440622975 437.93770279039563 322.2151200519145 415.5340687865021 C262.4720960415315 393.1304347826085 188.86015574302405 401.66515249837744 154.72128487994814 443.27190136275124 C120.58241401687224 484.87865022712504 119.51557430240109 576.6268656716416 119.51557430240109 576.6268656716416 L98.17887878417969 576.6268656716416 L98.17887878417972 576.6268656716416 C98.17887878417972 576.6268656716416 91.77780488773578 510.86632057105794 98.17887878417974 499.81440622972093 Z "
+              ></path>
+            </defs>
+            <g>
+              <use
+                xlinkHref="#s-Path_31-d1224"
+                fill="#B054D9"
+                fill-opacity="1.0"
+              ></use>
+            </g>
+          </g>
+          <g>
+            <defs>
+              <path
+                id="s-Path_32-d1224"
+                d="M656.0 388.0 C656.0 388.0 663.4555875588609 388.51620577043775 670.3598325326279 385.7679255349934 C676.8053619933863 383.20224003407594 682.7703771185535 377.7914408659535 681.7401953962697 366.4594419208304 C679.6065159673276 342.9889682024658 630.5318891016558 237.3718369785334 550.5189105163216 168.02725502920163 C534.5163147992548 157.3588573757816 351.01990425857423 122.15314679823467 278.47480367453795 146.6904602310704 C205.92970309050168 171.22777366390613 285.942651153307 370.72680077871496 312.613644015085 378.19467878001285 C339.28463687686303 385.66255678131074 656.0 388.0 656.0 388.0 Z "
+              ></path>
+            </defs>
+            <g>
+              <use
+                xlinkHref="#s-Path_32-d1224"
+                fill="#1BDAF1"
+                fill-opacity="1.0"
+              ></use>
+            </g>
+          </g>
+          <g>
+            <defs>
+              <path
+                id="s-Path_38-d1224"
+                d="M638.0 352.00000000000006 L660.9991528004596 388.59571706683965 L635.697503697478 388.5957170668397 L621.9971612117108 363.25892277741724 L569.7220152026257 384.59571706683965 L559.0536180579145 384.59571706683965 L638.0000000000002 308.85009733939 L654.0023526458444 324.85269305645687 Z "
+              ></path>
+            </defs>
+            <g>
+              <use
+                xlinkHref="#s-Path_38-d1224"
+                fill="#575353"
+                fill-opacity="1.0"
+              ></use>
+            </g>
+          </g>
+          <g>
+            <defs>
+              <path
+                id="s-Path_33-d1224"
+                d="M249.0 147.0 C237.93486400210645 169.09409474367288 203.79599313903077 195.76508760545107 234.73434485869313 277.9117456197274 C215.53122999821278 262.9759896171317 203.51611750886556 229.64881346197063 205.92967256797272 207.5003244646333 C208.3432276270799 185.35183546729596 236.59466227952885 139.84166125892284 249.0 147.0 Z "
+              ></path>
+            </defs>
+            <g>
+              <use
+                xlinkHref="#s-Path_33-d1224"
+                fill="#6F2098"
+                fill-opacity="1.0"
+              ></use>
+            </g>
+          </g>
+          <g>
+            <defs>
+              <path
+                id="s-Path_34-d1224"
+                d="M210.0 161.0 C210.0 161.0 181.39235913513699 205.36664503569096 198.46179456667494 255.50811161583374 C183.52603856407927 243.7728747566514 179.2586797061947 190.43088903309524 179.2586797061947 190.43088903309524 Z "
+              ></path>
+            </defs>
+            <g>
+              <use
+                xlinkHref="#s-Path_34-d1224"
+                fill="#6F2098"
+                fill-opacity="1.0"
+              ></use>
+            </g>
+          </g>
+          <g>
+            <defs>
+              <path
+                id="s-Path_39-d1224"
+                d="M890.0 556.0 L890.0 590.3340876876 L865.6253986165545 590.3340876876 L661.2197263591495 590.3340876876 L661.2197263591495 539.2326696232487 L865.6253986165548 539.2326696232487 Z "
+              ></path>
+            </defs>
+            <g>
+              <use
+                xlinkHref="#s-Path_39-d1224"
+                fill="#C4FFD5"
+                fill-opacity="1.0"
+              ></use>
+            </g>
+          </g>
+          <g>
+            <defs>
+              <ellipse
+                cx="146.2791499257266"
+                cy="317.84285714285716"
+                rx="23.5"
+                ry="17.842857142857156"
+                id="s-Ellipse_5-d1224-path"
+              ></ellipse>
+            </defs>
+            <g transform="rotate(24.189324276528428 146.2791499257266 317.84285714285716)">
+              <use
+                xlinkHref="#s-Ellipse_5-d1224-path"
+                fill="#D9D9D9"
+                fill-opacity="1.0"
+              ></use>
+            </g>
+          </g>
+          <g>
+            <defs>
+              <ellipse
+                cx="145.2241456529312"
+                cy="318.5069489350098"
+                rx="21.0000000000001"
+                ry="14.768693009118607"
+                id="s-Ellipse_6-d1224-path"
+              ></ellipse>
+            </defs>
+            <g transform="rotate(24.189324276528428 145.2241456529312 318.50694893500975)">
+              <use
+                xlinkHref="#s-Ellipse_6-d1224-path"
+                fill="#E8AB1C"
+                fill-opacity="1.0"
+              ></use>
+            </g>
+          </g>
+          <g>
+            <defs>
+              <path
+                id="s-Path_35-d1224"
+                d="M114.76089851284789 313.3800385338207 C114.41429736305801 294.1792598187006 139.55631564397845 288.4925628686682 156.2791499257266 288.49489901402825 "
+              ></path>
+            </defs>
+            <g>
+              <use
+                xlinkHref="#s-Path_35-d1224"
+                fill="none"
+                stroke-width="4.0"
+                stroke="#6F2098"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></use>
+            </g>
+          </g>
+          <g>
+            <defs>
+              <path
+                id="s-Path_41-d1224"
+                d="M130.10805179828301 545.8808073000266 L135.51825141287875 580.2148949876267 L126.29021442063595 580.2148949876267 C126.29021442063595 580.2148949876267 93.15950999690938 586.3937758144609 88.60253955552673 580.2148949876267 C84.04556911414409 574.0360141607924 83.78782294322048 543.1435651362792 88.60253955552673 529.1134769232754 C107.64388405681444 528.4670934414112 126.29021442063598 529.1134769232754 126.29021442063598 529.1134769232754 Z "
+              ></path>
+            </defs>
+            <g>
+              <use
+                xlinkHref="#s-Path_41-d1224"
+                fill="#C4FFD5"
+                fill-opacity="1.0"
+              ></use>
+            </g>
+          </g>
+          <g>
+            <defs>
+              <path
+                id="s-Path_40-d1224"
+                d="M449.906349880945 554.0000000000006 L460.3352886682543 588.3340876876007 L442.54691859416477 588.3340876876007 L369.89849853515636 588.3340876876007 L369.89849853515636 537.2326696232492 L442.5469185941648 537.2326696232492 Z "
+              ></path>
+            </defs>
+            <g>
+              <use
+                xlinkHref="#s-Path_40-d1224"
+                fill="#C4FFD5"
+                fill-opacity="1.0"
+              ></use>
+            </g>
+          </g>
+          <g>
+            <defs>
+              <path
+                id="s-Path_36-d1224"
+                d="M120.6735885788449 582.9610642439973 L156.8550457023012 582.9610642439972 C156.8550457023012 582.9610642439972 134.4514116984074 544.5548345230368 146.18664855758982 485.8786502271251 C176.05816056278127 411.1998702141466 234.44709089211113 413.4085271556515 263.53901714941344 412.0661907852044 C361.97552484733865 418.1917324160551 369.3566680254679 491.2128487994806 371.4903474544102 505.0817650876053 C372.5571871688814 540.2874756651523 356.3540723084008 582.9610642439969 356.3540723084008 582.9610642439969 L383.02506517017923 582.9610642439969 C383.02506517017923 582.9610642439969 392.62662260041935 531.7527579493833 392.62662260041935 505.0817650876052 C393.69346231489044 492.27968851395167 387.29242402806364 446.4055807916934 346.7525148781611 416.5340687865021 C325.41572058873874 398.3977936404931 269.94005543624024 380.261518494484 190.9939165653771 400.5314730694353 C119.51565569581186 425.06878650227117 105.82892574481102 476.27709279688474 106.80467229072028 497.6138870863074 C106.71357912215842 525.3517196625568 120.6735885788449 582.9610642439973 120.6735885788449 582.9610642439973 Z "
+              ></path>
+            </defs>
+            <g>
+              <use
+                xlinkHref="#s-Path_36-d1224"
+                fill="#6F2098"
+                fill-opacity="1.0"
+              ></use>
+            </g>
+          </g>
+          <g>
+            <defs>
+              <path
+                id="s-Path_37-d1224"
+                d="M439.7569709735878 582.4957819597664 L467.5484442731147 582.4957819597661 C467.5484442731147 582.4957819597661 447.5733864063 558.7159511659393 458.0365119555838 506.4003234195203 C484.66992244466985 439.8167971968053 540.0636334116248 446.1249845605489 566.0019660207774 444.92815878345624 C645.2331409781108 451.45652534310614 650.6136417746211 516.6957597460686 652.5160282381273 529.0612717588587 C653.4672214698803 560.45064840671 636.8608395251615 592.097339390006 636.8608395251615 592.097339390006 L677.7621484905436 592.0973393900061 C677.7621484905436 592.0973393900061 677.7621484905436 536.8385068356187 677.7621484905436 513.0586760417917 C678.7133417222966 501.64435726075476 665.5383043304803 469.5615692725423 629.3929615238636 442.9281587834563 C610.3690968888022 426.7578738436541 567.3080871244691 414.5711445003358 496.9197879747418 432.6438159036441 C455.5934754511796 443.85286308925356 432.7220034512377 510.03740712379704 433.59197810421114 529.0612717588588 C433.5107595254315 553.7922957844388 439.7569709735878 582.4957819597664 439.7569709735878 582.4957819597664 Z "
+              ></path>
+            </defs>
+            <g>
+              <use
+                xlinkHref="#s-Path_37-d1224"
+                fill="#6F2098"
+                fill-opacity="1.0"
+              ></use>
+            </g>
+          </g>
+          <g>
+            <defs>
+              <path
+                id="s-Path_42-d1224"
+                d="M855.5593463760258 537.7326696232493 L677.8098528275798 537.7326696232493 "
+              ></path>
+            </defs>
+            <g>
+              <use
+                xlinkHref="#s-Path_42-d1224"
+                fill="none"
+                stroke-width="7.0"
+                stroke="#6F2098"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></use>
+            </g>
+          </g>
+          <g>
+            <defs>
+              <path
+                id="s-Path_43-d1224"
+                d="M437.86184580527515 537.7326696232493 L385.43249655750003 537.7326696232493 "
+              ></path>
+            </defs>
+            <g>
+              <use
+                xlinkHref="#s-Path_43-d1224"
+                fill="none"
+                stroke-width="7.0"
+                stroke="#6F2098"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></use>
+            </g>
+          </g>
+          <g>
+            <defs>
+              <path
+                id="s-Path_44-d1224"
+                d="M115.71967797226318 530.0723646321509 L90.05773818676744 530.0723646321509 "
+              ></path>
+            </defs>
+            <g>
+              <use
+                xlinkHref="#s-Path_44-d1224"
+                fill="none"
+                stroke-width="7.0"
+                stroke="#6F2098"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></use>
+            </g>
+          </g>
+          <g>
+            <defs>
+              <path
+                id="s-Path_46-d1224"
+                d="M787.4650622170406 404.5624518316907 C767.4995989647268 415.0086720014948 744.2254214947894 427.116502249996 760.4498576598783 444.1073257491563 C776.6742938249671 461.09814924831664 831.2803971850913 478.82168815868465 840.2200021382324 476.78198632446487 C839.6953526617383 449.90954245301043 833.1192160640786 416.3350008530964 787.4650622170406 404.5624518316907 Z "
+              ></path>
+            </defs>
+            <g>
+              <use
+                xlinkHref="#s-Path_46-d1224"
+                fill="#D6872E"
+                fill-opacity="1.0"
+              ></use>
+            </g>
+          </g>
+          <g>
+            <defs>
+              <path
+                id="s-Path_45-d1224"
+                d="M792.7457177150967 404.56245183169074 C774.7787541947903 414.28705214105264 753.834271600877 425.5584793047866 768.43467676212 441.3755848961333 C783.0350819233631 457.19269048748004 832.175232325019 473.6918958621628 840.2200021382325 471.7930956487233 C839.7478689407208 446.7769872633153 833.8299894073716 415.5217588340901 792.7457177150967 404.56245183169074 Z "
+              ></path>
+            </defs>
+            <g>
+              <use
+                xlinkHref="#s-Path_45-d1224"
+                fill="#D6C62E"
+                fill-opacity="1.0"
+              ></use>
+            </g>
+          </g>
+          <g>
+            <defs>
+              <path
+                id="s-Path_47-d1224"
+                d="M785.3913057391317 404.0 C743.9178775697696 427.1072216586132 747.1634266042017 438.7650061780602 771.0652746429273 452.8099195993842 C781.2575046093009 458.8777399946579 802.2713819513338 471.50124736998384 839.2200021382322 477.6384585582189 "
+              ></path>
+            </defs>
+            <g>
+              <use
+                xlinkHref="#s-Path_47-d1224"
+                fill="none"
+                stroke-width="5.0"
+                stroke="#6F2098"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></use>
+            </g>
+          </g>
+        </svg>
+      </>
+    );
+  }
 
-      <svg xmlns="http://www.w3.org/2000/svg" width="199" height="179" viewBox="230 50 699 679" preserveAspectRatio="none">
-        <g>
-          <defs>
-            <ellipse cx="574.5" cy="400.0" rx="343.5" ry="330.5" id="s-Ellipse_1-d1224-path"></ellipse>
-          </defs>
+  function RodaTraseira() {
+    return (
+      <>
+        <svg
+          ref={boxRef}
+          style={{ zIndex: -100, marginLeft: -98, marginBottom: 0 }}
+          xmlns="http://www.w3.org/2000/svg"
+          width="30px"
+          height="53px"
+          viewBox="133 411 240 217"
+        >
           <g>
-            <use xlinkHref="#s-Ellipse_1-d1224-path" fill="#202020" fill-opacity="1.0"></use>
+            <defs>
+              <path
+                id="s-Path_1-d1224"
+                d="M374.14287680140166 541.7453284624651 C377.3413203811681 503.36400550526673 373.5301108440728 427.62027263718926 298.7214839433677 414.1997952504605 C285.51569701058054 412.0339157871361 223.69208316627515 403.65138559915795 185.18205724074642 427.4695536144414 C150.35274764141198 446.09441569038614 134.9755013049052 492.27476032938716 134.12334293545425 520.3020893523885 C131.72650818460727 553.9860495117903 163.9914664850994 617.954921107121 254.5900593707485 627.8307743492471 C338.8157403046006 632.0953657889359 372.1548382009268 556.6314398218152 374.14287680140166 541.7453284624651 Z "
+              ></path>
+            </defs>
+            <g>
+              <use
+                xlinkHref="#s-Path_1-d1224"
+                fill="#2D2B2B"
+                fill-opacity="1.0"
+              ></use>
+            </g>
           </g>
-        </g>
-        <g>
-          <defs>
-            <ellipse cx="574.5" cy="399.99999999999994"  rx="300.0000000000002" ry="286.0" id="s-Ellipse_2-d1224-path"></ellipse>
-          </defs>
           <g>
-            <use xlinkHref="#s-Ellipse_2-d1224-path" fill="#F5FF05" fill-opacity="1.0"></use>
+            <defs>
+              <path
+                id="s-Path_2-d1224"
+                d="M186.0 441.0 C197.40965297351786 449.6975867566205 196.1895426120223 454.88149846742414 202.7895426120223 465.58310729634377 "
+              ></path>
+            </defs>
+            <g>
+              <use
+                xlinkHref="#s-Path_2-d1224"
+                fill="none"
+                stroke-width="4.0"
+                stroke="#817E7E"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></use>
+            </g>
           </g>
-        </g>
-        <g>
-          <defs>
-            <path id="s-Path_4-d1224" d="M305.0 460.0 L506.5935974121094 460.0 L852.4698713892194 460.0 C852.4698713892194 460.0 743.1668473533698 695.7501739375437 535.9897922691997 667.2301668075418 C338.0127394850301 625.8301564575391 305.0 460.0 305.0 460.0 Z "></path>
-          </defs>
           <g>
-            <use xlinkHref="#s-Path_4-d1224" fill="#202020" fill-opacity="1.0"></use>
+            <defs>
+              <path
+                id="s-Path_3-d1224"
+                d="M204.0 430.0 C209.39758675662054 440.3008044144598 210.1814984674241 442.6790852240447 216.7814984674241 453.3806940529643 "
+              ></path>
+            </defs>
+            <g>
+              <use
+                xlinkHref="#s-Path_3-d1224"
+                fill="none"
+                stroke-width="4.0"
+                stroke="#817E7E"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></use>
+            </g>
           </g>
-        </g>
-        <g>
-          <defs>
-            <path id="s-Path_1-d1224" d="M561.0009789231766 265.45405811084373 C541.6298768639326 332.8887120538207 511.12488655893026 358.160985455412 514.218168540554 386.5341556083923 C516.0440108098196 404.13408820632884 533.522129252869 423.6358280826887 554.7762393360128 424.55734697913505 C575.3966295629778 425.4788658755814 603.4547191755884 419.4881007328456 605.4738278303364 380.19695704660194 C605.5917769165472 354.84765019629725 600.017396523971 326.0308151160338 561.0009789231766 265.45405811084373 Z "></path>
-          </defs>
           <g>
-            <use xlinkHref="#s-Path_1-d1224" fill="#FF6500" fill-opacity="1.0"></use>
+            <defs>
+              <path
+                id="s-Path_4-d1224"
+                d="M335.0 473.0 C346.40965297351784 481.6975867566205 345.1895426120223 486.88149846742414 351.7895426120223 497.58310729634377 "
+              ></path>
+            </defs>
+            <g transform="rotate(113.35629412523093 343.39477130601114 485.2915536481719)">
+              <use
+                xlinkHref="#s-Path_4-d1224"
+                fill="none"
+                stroke-width="4.0"
+                stroke="#817E7E"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></use>
+            </g>
           </g>
-        </g>
-        <g>
-          <defs>
-            <ellipse cx="412.9999999999999" cy="317.0484633824615" rx="29.999999999999886" ry="28.00000000000007" id="s-Ellipse_3-d1224-path"></ellipse>
-          </defs>
           <g>
-            <use xlinkHref="#s-Ellipse_3-d1224-path" fill="#202020" fill-opacity="1.0"></use>
+            <defs>
+              <path
+                id="s-Path_5-d1224"
+                d="M344.0 490.0 C349.3975867566205 500.3008044144598 350.1814984674241 502.6790852240447 356.78149846742406 513.3806940529644 "
+              ></path>
+            </defs>
+            <g transform="rotate(96.69398425690783 350.39074923371203 501.6903470264822)">
+              <use
+                xlinkHref="#s-Path_5-d1224"
+                fill="none"
+                stroke-width="4.0"
+                stroke="#817E7E"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></use>
+            </g>
           </g>
-        </g>
-        <g>
-          <defs>
-            <ellipse cx="707.9999999999999" cy="317.0484633824616" rx="29.999999999999886" ry="28.00000000000007" id="s-Ellipse_4-d1224-path"></ellipse>
-          </defs>
           <g>
-            <use xlinkHref="#s-Ellipse_4-d1224-path" fill="#202020" fill-opacity="1.0"></use>
+            <defs>
+              <path
+                id="s-Path_6-d1224"
+                d="M177.0 568.0 C188.40965297351786 576.6975867566205 187.1895426120223 581.8814984674241 193.7895426120223 592.5831072963438 "
+              ></path>
+            </defs>
+            <g transform="rotate(258.6339539927604 185.39477130601114 580.2915536481719)">
+              <use
+                xlinkHref="#s-Path_6-d1224"
+                fill="none"
+                stroke-width="4.0"
+                stroke="#817E7E"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></use>
+            </g>
           </g>
-        </g>
-        <g>
-          <defs>
-            <path id="s-Path_2-d1224" d="M345.0 171.0 L293.7839157623523 61.1714583179467 L452.37447502407394 97.97147759414727 Z "></path>
-          </defs>
           <g>
-            <use xlinkHref="#s-Path_2-d1224" fill="#202020" fill-opacity="1.0"></use>
+            <defs>
+              <path
+                id="s-Path_7-d1224"
+                d="M170.0 551.0 C175.39758675662054 561.3008044144598 176.1814984674241 563.6790852240447 182.7814984674241 574.3806940529644 "
+              ></path>
+            </defs>
+            <g transform="rotate(258.6339539927604 176.39074923371203 562.6903470264822)">
+              <use
+                xlinkHref="#s-Path_7-d1224"
+                fill="none"
+                stroke-width="4.0"
+                stroke="#817E7E"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></use>
+            </g>
           </g>
-        </g>
-        <g>
-          <defs>
-            <path id="s-Path_3-d1224" d="M784.8369757470292 171.73060221062187 L751.38733683448 50.97430844021133 L930.3548986971341 100.42839897678687 Z "></path>
-          </defs>
-          <g transform="rotate(328.15981508035895 840.8711177658071 111.3524553254166)">
-            <use xlinkHref="#s-Path_3-d1224" fill="#202020" fill-opacity="1.0"></use>
-          </g>
-        </g>
-        <g>
-          <defs>
-            <path id="s-Path_5-d1224" d="M319.99999999999994 471.99999999999994 C379.10197063797216 470.9075620925505 776.1419218087681 473.8260691128434 824.8952260385781 472.36769164140316 C803.0218853671656 533.5404898370849 750.2708465203052 567.5779391678047 750.2708465203052 567.5779391678047 L747.6056901089382 491.6209814438484 L381.1466835459906 490.2884032381649 C381.1466835459906 490.2884032381649 380.60366443632984 539.6688188139019 379.8141053403071 563.5802045507545 C356.3707167476655 540.8513530886866 323.52920502914975 501.0765802268015 319.99999999999994 471.99999999999994 Z "></path>
-          </defs>
           <g>
-            <use xlinkHref="#s-Path_5-d1224" fill="#FFFFFF" fill-opacity="1.0"></use>
+            <defs>
+              <path
+                id="s-Path_8-d1224"
+                d="M294.0 582.0 C305.40965297351784 590.6975867566205 304.1895426120223 595.8814984674241 310.7895426120223 606.5831072963438 "
+              ></path>
+            </defs>
+            <g transform="rotate(191.60361279685682 302.39477130601114 594.2915536481719)">
+              <use
+                xlinkHref="#s-Path_8-d1224"
+                fill="none"
+                stroke-width="4.0"
+                stroke="#817E7E"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></use>
+            </g>
           </g>
-        </g>
-        <g>
-          <defs>
-            <path id="s-Path_6-d1224" d="M653.3316618877501 238.55856014090125 C673.9674940167172 248.7816465624748 692.0324010010519 284.09722509960693 736.446858936491 272.8890534519752 C762.2408140104009 261.71542299970565 762.9933993227063 235.35722843479036 756.5270538809108 227.11599377471524 C751.2201722185407 218.10178326168992 725.7620923738535 215.7484991956883 716.0172739183035 231.45334368968733 C729.3859271522537 222.00529252158307 746.4369183581234 226.96090664349012 748.5695101928089 241.65046355270212 C749.9291261745443 254.84578718366163 735.6235213958558 269.6306783161384 713.5051023962153 266.9114463526677 C689.4542437641992 267.0908738377604 660.2454984492924 229.4858373736395 644.0283186960578 231.45334368968733 C627.8111389428232 233.42085000573516 607.0 259.4335584531237 607.0 259.4335584531237 C607.0 259.4335584531237 630.580601887174 229.17398447807074 653.3316618877501 238.55856014090125 Z "></path>
-          </defs>
           <g>
-            <use xlinkHref="#s-Path_6-d1224" fill="#FFFFFF" fill-opacity="1.0"></use>
+            <defs>
+              <path
+                id="s-Path_9-d1224"
+                d="M280.0 591.0 C285.3975867566205 601.3008044144598 286.1814984674241 603.6790852240447 292.78149846742406 614.3806940529644 "
+              ></path>
+            </defs>
+            <g transform="rotate(191.60361279685682 286.39074923371203 602.6903470264822)">
+              <use
+                xlinkHref="#s-Path_9-d1224"
+                fill="none"
+                stroke-width="4.0"
+                stroke="#817E7E"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></use>
+            </g>
           </g>
-        </g>
-        <g>
-          <defs>
-            <path id="s-Path_7-d1224" d="M393.6397768854423 239.12578285429973 C412.2519101013913 248.34631949984617 428.5452416823453 280.19859704424164 468.60409671868626 270.0895797529003 C491.8685100460223 260.0117162975421 492.5472914007773 236.23839688361537 486.7150825501296 228.8053572853769 C481.9286320767969 220.67514543559517 458.9671556250448 218.55264142133205 450.1779845304933 232.7173553049928 C462.2356109616967 224.1958483518026 477.61445867688724 228.66547911965034 479.5379131358279 241.91447186047287 C480.7641953432253 253.81576664287383 467.8615016107098 267.15074444368105 447.9121747129777 264.6981800288863 C426.2199171863873 264.86001155737887 399.8755926408966 230.94279688502488 385.2487867981364 232.7173553049928 C370.6219809553762 234.49191372496074 351.85173277935377 257.953627888201 351.85173277935377 257.953627888201 C351.85173277935377 257.953627888201 373.1198503378537 230.66152653935475 393.6397768854423 239.12578285429973 Z "></path>
-          </defs>
           <g>
-            <use xlinkHref="#s-Path_7-d1224" fill="#FFFFFF" fill-opacity="1.0"></use>
+            <defs>
+              <ellipse
+                cx="255.05564627058254"
+                cy="519.6457768240859"
+                rx="66.05564627058253"
+                ry="63.645776824086"
+                id="s-Ellipse_1-d1224-path"
+              ></ellipse>
+            </defs>
+            <g>
+              <use
+                xlinkHref="#s-Ellipse_1-d1224-path"
+                fill="#999696"
+                fill-opacity="1.0"
+              ></use>
+            </g>
           </g>
-        </g>
-      </svg>
+          <g>
+            <defs>
+              <ellipse
+                cx="256.45155040110114"
+                cy="519.1041752773176"
+                rx="53.45155040110116"
+                ry="52.10417527731761"
+                id="s-Ellipse_2-d1224-path"
+              ></ellipse>
+            </defs>
+            <g>
+              <use
+                xlinkHref="#s-Ellipse_2-d1224-path"
+                fill="#D9D9D9"
+                fill-opacity="1.0"
+              ></use>
+            </g>
+          </g>
+          <g>
+            <defs>
+              <path
+                id="s-Path_10-d1224"
+                d="M234.38779809307297 471.0 C234.38779809307297 471.0 206.9651625734364 476.3530373027 203.0 508.7691873640463 "
+              ></path>
+            </defs>
+            <g>
+              <use
+                xlinkHref="#s-Path_10-d1224"
+                fill="none"
+                stroke-width="4.0"
+                stroke="#404040"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></use>
+            </g>
+          </g>
+          <g>
+            <defs>
+              <path
+                id="s-Path_11-d1224"
+                d="M202.0 525.0 C204.74183434358318 547.4137798292498 218.5473225684519 568.2787733911593 255.42132869875545 569.8819910489987 "
+              ></path>
+            </defs>
+            <g>
+              <use
+                xlinkHref="#s-Path_11-d1224"
+                fill="none"
+                stroke-width="4.0"
+                stroke="#404040"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></use>
+            </g>
+          </g>
+          <g>
+            <defs>
+              <path
+                id="s-Path_12-d1224"
+                d="M246.0 469.78590586986024 C251.9154235376301 465.4107499738579 264.6298678808724 466.7960074677867 267.83936616591967 469.7859058698603 "
+              ></path>
+            </defs>
+            <g>
+              <use
+                xlinkHref="#s-Path_12-d1224"
+                fill="none"
+                stroke-width="4.0"
+                stroke="#404040"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></use>
+            </g>
+          </g>
 
-    </>)
+          <g>
+            <defs>
+              <path
+                id="s-Path_14-d1224"
+                d="M309.6461282318238 521.0 C309.6461282318238 521.0 310.6099621783951 562.2368509229282 263.0 569.8490718282959 "
+              ></path>
+            </defs>
+            <g>
+              <use
+                xlinkHref="#s-Path_14-d1224"
+                fill="none"
+                stroke-width="4.0"
+                stroke="#404040"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></use>
+            </g>
+          </g>
+          <g>
+            <defs>
+              <path
+                id="s-Path_15-d1224"
+                d="M256.2895826159882 506.11618221153697 C251.0599818112599 507.552664635455 242.25094759162454 509.15266463545504 243.0509475916245 521.952664635455 C244.6464304818067 532.3662159649083 253.4509475916243 534.0475239416278 260.32547990361735 532.0226798376302 C271.9729095567037 526.8159041729036 271.1954951057926 522.7978357336326 271.15935822725055 517.9752501845438 C269.53225556834406 511.1639574099994 264.70111498144547 505.07744123271 256.2895826159882 506.11618221153697 Z "
+              ></path>
+            </defs>
+            <g>
+              <use
+                xlinkHref="#s-Path_15-d1224"
+                fill="none"
+                stroke-width="6.0"
+                stroke="#404040"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></use>
+            </g>
+          </g>
+        </svg>
+      </>
+    );
+  }
+
+  function RodaDianteira() {
+    return (
+      <>
+        <svg
+          style={{ zIndex: -10, marginBottom: 0, marginLeft: 12 }}
+          ref={bol2Ref}
+          xmlns="http://www.w3.org/2000/svg"
+          width="25px"
+          height="50px"
+          viewBox="133 411 240 217"
+        >
+          <g>
+            <defs>
+              <path
+                id="s-Path_1-d1224"
+                d="M374.14287680140166 541.7453284624651 C377.3413203811681 503.36400550526673 373.5301108440728 427.62027263718926 298.7214839433677 414.1997952504605 C285.51569701058054 412.0339157871361 223.69208316627515 403.65138559915795 185.18205724074642 427.4695536144414 C150.35274764141198 446.09441569038614 134.9755013049052 492.27476032938716 134.12334293545425 520.3020893523885 C131.72650818460727 553.9860495117903 163.9914664850994 617.954921107121 254.5900593707485 627.8307743492471 C338.8157403046006 632.0953657889359 372.1548382009268 556.6314398218152 374.14287680140166 541.7453284624651 Z "
+              ></path>
+            </defs>
+            <g>
+              <use
+                xlinkHref="#s-Path_1-d1224"
+                fill="#2D2B2B"
+                fill-opacity="1.0"
+              ></use>
+            </g>
+          </g>
+          <g>
+            <defs>
+              <path
+                id="s-Path_2-d1224"
+                d="M186.0 441.0 C197.40965297351786 449.6975867566205 196.1895426120223 454.88149846742414 202.7895426120223 465.58310729634377 "
+              ></path>
+            </defs>
+            <g>
+              <use
+                xlinkHref="#s-Path_2-d1224"
+                fill="none"
+                stroke-width="4.0"
+                stroke="#817E7E"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></use>
+            </g>
+          </g>
+          <g>
+            <defs>
+              <path
+                id="s-Path_3-d1224"
+                d="M204.0 430.0 C209.39758675662054 440.3008044144598 210.1814984674241 442.6790852240447 216.7814984674241 453.3806940529643 "
+              ></path>
+            </defs>
+            <g>
+              <use
+                xlinkHref="#s-Path_3-d1224"
+                fill="none"
+                stroke-width="4.0"
+                stroke="#817E7E"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></use>
+            </g>
+          </g>
+          <g>
+            <defs>
+              <path
+                id="s-Path_4-d1224"
+                d="M335.0 473.0 C346.40965297351784 481.6975867566205 345.1895426120223 486.88149846742414 351.7895426120223 497.58310729634377 "
+              ></path>
+            </defs>
+            <g transform="rotate(113.35629412523093 343.39477130601114 485.2915536481719)">
+              <use
+                xlinkHref="#s-Path_4-d1224"
+                fill="none"
+                stroke-width="4.0"
+                stroke="#817E7E"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></use>
+            </g>
+          </g>
+          <g>
+            <defs>
+              <path
+                id="s-Path_5-d1224"
+                d="M344.0 490.0 C349.3975867566205 500.3008044144598 350.1814984674241 502.6790852240447 356.78149846742406 513.3806940529644 "
+              ></path>
+            </defs>
+            <g transform="rotate(96.69398425690783 350.39074923371203 501.6903470264822)">
+              <use
+                xlinkHref="#s-Path_5-d1224"
+                fill="none"
+                stroke-width="4.0"
+                stroke="#817E7E"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></use>
+            </g>
+          </g>
+          <g>
+            <defs>
+              <path
+                id="s-Path_6-d1224"
+                d="M177.0 568.0 C188.40965297351786 576.6975867566205 187.1895426120223 581.8814984674241 193.7895426120223 592.5831072963438 "
+              ></path>
+            </defs>
+            <g transform="rotate(258.6339539927604 185.39477130601114 580.2915536481719)">
+              <use
+                xlinkHref="#s-Path_6-d1224"
+                fill="none"
+                stroke-width="4.0"
+                stroke="#817E7E"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></use>
+            </g>
+          </g>
+          <g>
+            <defs>
+              <path
+                id="s-Path_7-d1224"
+                d="M170.0 551.0 C175.39758675662054 561.3008044144598 176.1814984674241 563.6790852240447 182.7814984674241 574.3806940529644 "
+              ></path>
+            </defs>
+            <g transform="rotate(258.6339539927604 176.39074923371203 562.6903470264822)">
+              <use
+                xlinkHref="#s-Path_7-d1224"
+                fill="none"
+                stroke-width="4.0"
+                stroke="#817E7E"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></use>
+            </g>
+          </g>
+          <g>
+            <defs>
+              <path
+                id="s-Path_8-d1224"
+                d="M294.0 582.0 C305.40965297351784 590.6975867566205 304.1895426120223 595.8814984674241 310.7895426120223 606.5831072963438 "
+              ></path>
+            </defs>
+            <g transform="rotate(191.60361279685682 302.39477130601114 594.2915536481719)">
+              <use
+                xlinkHref="#s-Path_8-d1224"
+                fill="none"
+                stroke-width="4.0"
+                stroke="#817E7E"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></use>
+            </g>
+          </g>
+          <g>
+            <defs>
+              <path
+                id="s-Path_9-d1224"
+                d="M280.0 591.0 C285.3975867566205 601.3008044144598 286.1814984674241 603.6790852240447 292.78149846742406 614.3806940529644 "
+              ></path>
+            </defs>
+            <g transform="rotate(191.60361279685682 286.39074923371203 602.6903470264822)">
+              <use
+                xlinkHref="#s-Path_9-d1224"
+                fill="none"
+                stroke-width="4.0"
+                stroke="#817E7E"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></use>
+            </g>
+          </g>
+          <g>
+            <defs>
+              <ellipse
+                cx="255.05564627058254"
+                cy="519.6457768240859"
+                rx="66.05564627058253"
+                ry="63.645776824086"
+                id="s-Ellipse_1-d1224-path"
+              ></ellipse>
+            </defs>
+            <g>
+              <use
+                xlinkHref="#s-Ellipse_1-d1224-path"
+                fill="#999696"
+                fill-opacity="1.0"
+              ></use>
+            </g>
+          </g>
+          <g>
+            <defs>
+              <ellipse
+                cx="256.45155040110114"
+                cy="519.1041752773176"
+                rx="53.45155040110116"
+                ry="52.10417527731761"
+                id="s-Ellipse_2-d1224-path"
+              ></ellipse>
+            </defs>
+            <g>
+              <use
+                xlinkHref="#s-Ellipse_2-d1224-path"
+                fill="#D9D9D9"
+                fill-opacity="1.0"
+              ></use>
+            </g>
+          </g>
+          <g>
+            <defs>
+              <path
+                id="s-Path_10-d1224"
+                d="M234.38779809307297 471.0 C234.38779809307297 471.0 206.9651625734364 476.3530373027 203.0 508.7691873640463 "
+              ></path>
+            </defs>
+            <g>
+              <use
+                xlinkHref="#s-Path_10-d1224"
+                fill="none"
+                stroke-width="4.0"
+                stroke="#404040"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></use>
+            </g>
+          </g>
+          <g>
+            <defs>
+              <path
+                id="s-Path_11-d1224"
+                d="M202.0 525.0 C204.74183434358318 547.4137798292498 218.5473225684519 568.2787733911593 255.42132869875545 569.8819910489987 "
+              ></path>
+            </defs>
+            <g>
+              <use
+                xlinkHref="#s-Path_11-d1224"
+                fill="none"
+                stroke-width="4.0"
+                stroke="#404040"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></use>
+            </g>
+          </g>
+          <g>
+            <defs>
+              <path
+                id="s-Path_12-d1224"
+                d="M246.0 469.78590586986024 C251.9154235376301 465.4107499738579 264.6298678808724 466.7960074677867 267.83936616591967 469.7859058698603 "
+              ></path>
+            </defs>
+            <g>
+              <use
+                xlinkHref="#s-Path_12-d1224"
+                fill="none"
+                stroke-width="4.0"
+                stroke="#404040"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></use>
+            </g>
+          </g>
+
+          <g>
+            <defs>
+              <path
+                id="s-Path_14-d1224"
+                d="M309.6461282318238 521.0 C309.6461282318238 521.0 310.6099621783951 562.2368509229282 263.0 569.8490718282959 "
+              ></path>
+            </defs>
+            <g>
+              <use
+                xlinkHref="#s-Path_14-d1224"
+                fill="none"
+                stroke-width="4.0"
+                stroke="#404040"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></use>
+            </g>
+          </g>
+          <g>
+            <defs>
+              <path
+                id="s-Path_15-d1224"
+                d="M256.2895826159882 506.11618221153697 C251.0599818112599 507.552664635455 242.25094759162454 509.15266463545504 243.0509475916245 521.952664635455 C244.6464304818067 532.3662159649083 253.4509475916243 534.0475239416278 260.32547990361735 532.0226798376302 C271.9729095567037 526.8159041729036 271.1954951057926 522.7978357336326 271.15935822725055 517.9752501845438 C269.53225556834406 511.1639574099994 264.70111498144547 505.07744123271 256.2895826159882 506.11618221153697 Z "
+              ></path>
+            </defs>
+            <g>
+              <use
+                xlinkHref="#s-Path_15-d1224"
+                fill="none"
+                stroke-width="6.0"
+                stroke="#404040"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></use>
+            </g>
+          </g>
+        </svg>
+      </>
+    );
   }
 
   return (
     <>
-    <div>
-      <Content ref={ref}>
+      <ThemeProvider theme={theme}>
+        <Content ref={ref}>
+          <button
+            style={{ margin: 0, padding: 0, border: 'none' }}
+            onClick={() => {
+              goCar(mouse.pageX);
+            }}
+          >
+            <Background ref={backgraundndRef}>
+              {
+                <>
+                  <Bar active={true}>
+                    {Carro()}
+                    {RodaTraseira()}
+                    {RodaDianteira()}
+                  </Bar>
+                </>
+              }
+            </Background>
+            <Dunas ref={dunasRef}></Dunas>
+          </button>
+          <Home active={true}>
+          </Home>
 
-
-
-        {<>
-
-          <ThemeProvider theme={theme}>
-          <StapOne>
-
-
-
-          {(!loadRef) && (<>
-
-
-
-            <Bar active={true} >
-
-            {Carro()}
-            {RodaTraseira()}
-
-            {RodaDianteira()}
-            </Bar>
-
-
-
-          </>)}
-
-
-          </StapOne>
-        </ThemeProvider>
-
-
-
-
-        </>}
-
-      </Content>
-      </div>
+          <Navigation>
+            <LeftSideNav>
+              <NavItem>Link Two</NavItem>
+              <NavItem>Link Three</NavItem>
+              <NavItem>Link Three</NavItem>
+              <NavItem>Link Four</NavItem>
+            </LeftSideNav>
+          </Navigation>
+        </Content>
+      </ThemeProvider>
       {/* <StapOne>{RenderSVG('#2ca3e5')}</StapOne>
 <StapTwo>{RenderSVG('#0c70a7')}</StapTwo> */}
 
